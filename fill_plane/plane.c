@@ -40,10 +40,10 @@ void buildPlaneToRight(int x, int y, color c) {
 	
 	drawPolygon(6, &PointList, c, 2);
 
-	Point circle;
-	circle.x = planeX + 260;
-	circle.y = planeY + 3;
-	drawCircle(12, circle, 2, c);
+	// Point circle;
+	// circle.x = planeX + 260;
+	// circle.y = planeY + 3;
+	// drawCircle(12, circle, 2, c);
 
 	planeX = x - 100;
 	planeY = y - 25;
@@ -123,10 +123,10 @@ void buildPlaneToLeft(int x, int y, color c){
 	
 	drawPolygon(6, &PointList, c, 2);
 
-	Point circle;
-	circle.x = planeX - 260;
-	circle.y = planeY + 3;
-	drawCircle(12, circle, 2, c);
+	// Point circle;
+	// circle.x = planeX - 260;
+	// circle.y = planeY + 3;
+	// drawCircle(12, circle, 2, c);
 
 	planeX = x + 100;
 	planeY = y - 25;

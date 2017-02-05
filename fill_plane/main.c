@@ -1,4 +1,4 @@
-#include "plane.c"
+#include "flood.c"
 #include <termios.h>
 #include <unistd.h>
 #include <pthread.h>
@@ -38,9 +38,9 @@ color colorBlack() {
 color colorYellow() {
 	//yellow
 	color C;
-	C.R = 255;
-	C.G = 255;
-	C.B = 10;
+	C.R = 255; //255 10
+	C.G = 255; //255 -1
+	C.B = 10; //10 -1
 
 	return C;
 }
@@ -142,28 +142,55 @@ void *inc_x(void *x_void_ptr) {
 	P.x = displayWidth / 2;
 	P.y = 740; 
  
-//	 this variable is our reference to the thread 
+	// this variable is our reference to the thread 
 	pthread_t inc_x_thread, secondThread;
+
+	// indeksJPesawat = 240;
+	// sign = 0;
+	// indeksIPesawat = 1000;
+	// printBackground(X);
+	// buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C);
+	// // printSquare(3, indeksIPesawat + 74, indeksJPesawat - 20, B); 
+	// // printSquare(2, indeksIPesawat + 80, indeksJPesawat - 5, B); 
+	// // printSquare(2, indeksIPesawat + 80, indeksJPesawat + 5, B); 
+	// // printSquare(3, indeksIPesawat + 180, indeksJPesawat - 10, B);
+	// // printSquare(3, indeksIPesawat + 180, indeksJPesawat - 60, B);
+	// // printSquare(3, indeksIPesawat + 250, indeksJPesawat + 10, B);
+
+	// boundary_fill (indeksIPesawat + 74, indeksJPesawat - 20, B,  C, X); 
+	// boundary_fill (indeksIPesawat + 80, indeksJPesawat - 5, B, C, X);
+	// boundary_fill (indeksIPesawat + 80, indeksJPesawat + 5, B, C, X); 
+	// boundary_fill (indeksIPesawat + 180, indeksJPesawat - 10, B, C, X); 
+	// boundary_fill (indeksIPesawat + 180, indeksJPesawat - 60, B, C, X); 
+	// boundary_fill (indeksIPesawat + 250, indeksJPesawat + 10, B, C, X); 
 
 	 //create a thread which executes inc_x(&x) 
 	if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
 		fprintf(stderr, "Error creating thread\n");
 		return 1;
 	}
-
+	int done = 0;
 	printBackground(X);	
 	while (endSign == 0){
 		// pesawat terbang disini 
 		int counter = 0;
 		indeksJPesawat = 240;
-		sign = 0;
+		sign = 0;  
 		indeksIPesawat = 1000;
 
 		while(indeksIPesawat > 20 && endSign == 0){
 			direction = 1;
-	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C); 
+	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C);
+	  		boundary_fill (indeksIPesawat + 74, indeksJPesawat - 20, B,  C, X);  
+			boundary_fill (indeksIPesawat + 180, indeksJPesawat - 10, B, C, X); 
+			boundary_fill (indeksIPesawat + 180, indeksJPesawat - 60, B, C, X); 
+			boundary_fill (indeksIPesawat + 250, indeksJPesawat + 10, B, C, X); 
 	  		usleep(50000);
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
+	  		boundary_fill (indeksIPesawat + 74, indeksJPesawat - 20, X,  C, B); 
+			boundary_fill (indeksIPesawat + 180, indeksJPesawat - 10, X, C, B); 
+			boundary_fill (indeksIPesawat + 180, indeksJPesawat - 60, X, C, B); 
+			boundary_fill (indeksIPesawat + 250, indeksJPesawat + 10, X, C, B); 
 	  		
 	 	    if (indeksJPesawat <= 100)
 	 	    	sign = 1;
@@ -190,8 +217,16 @@ void *inc_x(void *x_void_ptr) {
 	  	while (indeksIPesawat < 1250 && endSign == 0){
 	  		direction = -1;
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C); 
+	  		boundary_fill (indeksIPesawat - 74, indeksJPesawat - 20, B,  C, X); 
+			boundary_fill (indeksIPesawat - 180, indeksJPesawat - 10, B, C, X); 
+			boundary_fill (indeksIPesawat - 180, indeksJPesawat - 60, B, C, X); 
+			boundary_fill (indeksIPesawat - 250, indeksJPesawat + 10, B, C, X); 
 	  		usleep(50000);
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X); 
+	  		boundary_fill (indeksIPesawat - 74, indeksJPesawat - 20, X,  C, B);  
+			boundary_fill (indeksIPesawat - 180, indeksJPesawat - 10, X, C, B); 
+			boundary_fill (indeksIPesawat - 180, indeksJPesawat - 60, X, C, B); 
+			boundary_fill (indeksIPesawat - 250, indeksJPesawat + 10, X, C, B); 
 
 	 	    if (indeksJPesawat <= 100)
 	 	    	sign = 1;

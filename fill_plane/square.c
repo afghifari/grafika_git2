@@ -38,7 +38,6 @@ void printSquare (int edge, int loc_x, int loc_y, color C) {
 		for (i = loc_x; i < (loc_x+edge); i++) {
 			for (j = loc_y; j < (loc_y+edge); j++) {
 				location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
-				
 				if (fbp + location) { //check for segmentation fault
 					if (vinfo.bits_per_pixel == 32) {
 						*(fbp + location) = C.B;            //Blue
@@ -86,5 +85,4 @@ void printBackground(color C) {
         }
     }
 }
-
 
