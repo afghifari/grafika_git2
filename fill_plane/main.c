@@ -146,18 +146,6 @@ void *inc_x(void *x_void_ptr) {
 	// this variable is our reference to the thread 
 	pthread_t inc_x_thread, secondThread;
 
-	// indeksJPesawat = 240;
-	// sign = 0;
-	// indeksIPesawat = 1000;
-	// printBackground(X);
-	// buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C);
-	// // printSquare(3, indeksIPesawat + 74, indeksJPesawat - 20, B); 
-	// // printSquare(2, indeksIPesawat + 80, indeksJPesawat - 5, B); 
-	// // printSquare(2, indeksIPesawat + 80, indeksJPesawat + 5, B); 
-	// // printSquare(3, indeksIPesawat + 180, indeksJPesawat - 10, B);
-	// // printSquare(3, indeksIPesawat + 180, indeksJPesawat - 60, B);
-	// // printSquare(3, indeksIPesawat + 250, indeksJPesawat + 10, B);
-
 	 //create a thread which executes inc_x(&x) 
 	if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
 		fprintf(stderr, "Error creating thread\n");
