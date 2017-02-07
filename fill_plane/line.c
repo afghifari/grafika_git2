@@ -3,12 +3,6 @@
 #include "line.h"
 
 
-/*Gambar explosion masih jelek*/
-Point explosionPoint[11] = {
-	{4,9}, {7,12}, {11, 10}, {7, 14}, {10, 16},
-	{6, 16}, {2, 18}, {5, 15}, {1, 14}, {4, 12}
-};
-
 void swap (int *a, int *b) {
 	int temp;
 
