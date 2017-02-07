@@ -44,9 +44,9 @@ void shootCannon(int x, int y, color c) {
 	P2.y = y - 8;
 
 	while ((P1.y > 0) && (destProjectile == 0) && hit==0) {
-		drawBresenhamLine(P1, P2, c, 7);
+    buildRocket(P1.x, P1.y, c);
 		usleep(1000);
-		drawBresenhamLine(P1, P2, black, 7);
+    buildRocket(P1.x, P1.y, black);
 		P1.y -= 4;
 		P2.y -= 4;
 		if (direction == 1){
