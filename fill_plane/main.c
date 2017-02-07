@@ -149,7 +149,7 @@ void *inc_x(void *x_void_ptr) {
 	displayHeight = vinfo.yres;
 
 	P.x = displayWidth / 2;
-	P.y = 740;
+	P.y = vinfo.yres;
 
 	// this variable is our reference to the thread
 	pthread_t inc_x_thread, secondThread;

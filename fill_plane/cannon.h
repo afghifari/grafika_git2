@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "line.h"
+#include "rocket.h"
 
 extern int cannonX;
 extern int cannonY;
