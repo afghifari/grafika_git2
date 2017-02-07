@@ -1,4 +1,4 @@
-#include "square.c"
+#include "alphabets.h"
 
 void printA(int x, int y, color C) {
     int i, j;
@@ -8,7 +8,7 @@ void printA(int x, int y, color C) {
                 printSquare(SIZE, i*SIZE+x, j*SIZE+y, C);
             }
         }
-    }c
+    }
 
 	printSquare(SIZE, x, 3*SIZE+y, C);
 	printSquare(SIZE, x, 4*SIZE+y, C);
@@ -81,7 +81,7 @@ void printG(int x, int y, color C) {
     }
 
     printSquare(SIZE, x, SIZE+y, C);
-    
+
     for(i=0; i<4; i++){
     	if (!(i==1)) {
     		printSquare(SIZE, i*SIZE+x, 2*SIZE+y, C);
@@ -127,7 +127,7 @@ void printJ(int x, int y, color C) {
 				printSquare(SIZE, i*SIZE+x, j*SIZE+y, C);
 			}
 		}
-	}	
+	}
 }
 
 void printK(int x, int y, color C) {
@@ -255,7 +255,7 @@ void printU(int x, int y, color C) {
 				printSquare(SIZE, i*SIZE+x, j*SIZE+y, C);
 			}
 		}
-	}	
+	}
 }
 
 void printV(int x, int y, color C) {

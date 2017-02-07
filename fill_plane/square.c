@@ -1,12 +1,5 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <sys/mman.h>
-#include <sys/ioctl.h>
+#include "square.h"
 
-#define SIZE 10
 int fbfd = 0;
 struct fb_var_screeninfo vinfo;
 struct fb_fix_screeninfo finfo;
@@ -14,16 +7,10 @@ long int screensize = 0;
 char *fbp = 0;
 int displayWidth, displayHeight;
 
-static int indeksIPesawat, indeksJPesawat;
-static int endSign;
-static int direction;
-static int hit;
-/*color struct consists of Red, Green, and Blue */
-typedef struct {
-    int R;
-    int G;
-    int B;
-} color;
+int indeksIPesawat, indeksJPesawat;
+int endSign;
+int direction;
+int hit;
 
 /*
 edge    : square size
@@ -48,7 +35,7 @@ void printSquare (int edge, int loc_x, int loc_y, color C) {
 						int r = C.R;     //Red
 						int g = C.G;     //Green
 						int b = C.B;     //Blue
-						
+
 						unsigned short int t = r<<11 | g << 5 | b;
 						*((unsigned short int*)(fbp + location)) = t;
 					}
@@ -78,11 +65,10 @@ void printBackground(color C) {
                 int r = C.R;     //Red
                 int g = C.G;     //Green
                 int b = C.B;     //Blue
-                
+
                 unsigned short int t = r<<11 | g << 5 | b;
                 *((unsigned short int*)(fbp + location)) = t;
             }
         }
     }
 }
-

@@ -1,11 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "square.c"
+#include "line.h"
 
-typedef struct {
-	int x;
-	int y;
-} Point;
 
 /*Gambar explosion masih jelek*/
 Point explosionPoint[11] = {
@@ -33,7 +29,7 @@ void plotSlopPositiveLine (Point P1, Point P2, color C, int W) {
 	dY = abs(P2.y - P1.y);
 	i = P1.x;
 	j = P1.y;
-	
+
 	if (dX >= dY) {
 		p = 2*dY - dX;
 		// printf("Based on +X\n");
@@ -83,10 +79,10 @@ void plotSlopNegativeLine (Point P1, Point P2, color C, int W) {
 	dX = abs(P2.x - P1.x);
 	dY = abs(P2.y - P1.y);
 	i = P1.x;
-	j = P1.y;	
+	j = P1.y;
 
 	if (dX >= dY) {
-		p = 2*dY - dX;		
+		p = 2*dY - dX;
 		// printf("Based on -X\n");
 		for (x=P1.x; x<=P2.x; x++) {
 			// printf("%d %d\n", x, j);
@@ -131,11 +127,11 @@ void plotSlopNegativeLine (Point P1, Point P2, color C, int W) {
 
 void plotVerticalLine (Point P1, Point P2, color C, int W) {
 	int j;
-	
+
 	if (P2.y < P1.y) {
-		swapPoint(&P1,&P2);	
+		swapPoint(&P1,&P2);
 	}
-	
+
 	for(j = P1.y ; j <= P2.y; j++){
 		// printf("%d %d\n", P1.x , j);
 		printSquare(W, P1.x, j, C);
@@ -144,7 +140,7 @@ void plotVerticalLine (Point P1, Point P2, color C, int W) {
 
 void drawBresenhamLine (Point P1, Point P2, color C, int W) {
 	if (P1.x > P2.x) {
-		swapPoint(&P1,&P2); 
+		swapPoint(&P1,&P2);
 	}
 
 	if ((P2.x >= P1.x && P1.y > P2.y)) {
