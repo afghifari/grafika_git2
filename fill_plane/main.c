@@ -86,6 +86,8 @@ void *inc_x(void *x_void_ptr) {
         else if (c == KEY_ENTER) {
         	pthread_create(&thread1, NULL, &tothread, NULL);
 			pthread_join(thread1, NULL);
+        }else {
+        	
         }
 	}
 	explode = 1;
@@ -95,6 +97,7 @@ void *inc_x(void *x_void_ptr) {
 
  int main()
  {
+ 	hit = 0;
 	int x = 0, y = 0;
 	direction = 0;
 	int sign;
@@ -217,9 +220,8 @@ void *inc_x(void *x_void_ptr) {
 	 	    indeksIPesawat += 10;
 	  	}
 	}
-	
+	 
 	endSign = 1;
-       
     pthread_join(inc_x_thread, NULL);
 	munmap(fbp, screensize);
 	close(fbfd);

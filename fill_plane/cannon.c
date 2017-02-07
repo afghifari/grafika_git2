@@ -45,7 +45,7 @@ void shootCannon(int x, int y, color c) {
 	P2.x = x;
 	P2.y = y - 8;
 	
-	while ((P1.y > 0) && (destProjectile == 0)) {
+	while ((P1.y > 0) && (destProjectile == 0) && hit==0) {
 		drawBresenhamLine(P1, P2, c, 7);
 		usleep(1000);
 		drawBresenhamLine(P1, P2, black, 7);
@@ -54,11 +54,13 @@ void shootCannon(int x, int y, color c) {
 		if (direction == 1){
 			if ((P2.x >= indeksIPesawat && P2.x < indeksIPesawat+180) && (P2.y < indeksJPesawat) ) {
 				endSign = 1;
+				hit = 1;
 				drawExplosion(P2);
 			}
 		}else {
 			if ((P2.x <= indeksIPesawat && P2.x > indeksIPesawat-180) && (P2.y < indeksJPesawat) ) {
 				endSign = 1;
+				hit = 1;
 				drawExplosion(P2);
 			}
 		}

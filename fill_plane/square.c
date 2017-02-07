@@ -17,7 +17,7 @@ int displayWidth, displayHeight;
 static int indeksIPesawat, indeksJPesawat;
 static int endSign;
 static int direction;
-
+static int hit;
 /*color struct consists of Red, Green, and Blue */
 typedef struct {
     int R;
