@@ -1,4 +1,9 @@
-#include "flood.c"
+#include "flood.h"
+#include "plane.h"
+#include "cannon.h"
+#include "square.h"
+#include "line.h"
+
 #include <termios.h>
 #include <unistd.h>
 #include <pthread.h>
@@ -12,7 +17,7 @@
 
 static int explode;
 static Point P;
- 
+
 //read keypress
 int getch(void) {
 	struct termios oldattr, newattr;
@@ -46,7 +51,7 @@ color colorYellow() {
 }
 
 color colorBlue() {
-	//blue 
+	//blue
 	color B;
 	B.R = 66;
 	B.G = 134;
@@ -61,16 +66,16 @@ void *tothread(){
 	yellow = colorYellow();
 	shootCannon(P.x, P.y, yellow);
 }
- 
-/* this function is run by the second thread */ 
+
+/* this function is run by the second thread */
 void *inc_x(void *x_void_ptr) {
 	pthread_t thread1;
-	
+
 	color C, X;
 	C = colorYellow();
 	X = colorBlack();
-	
-	while(endSign == 0){	
+
+	while(endSign == 0){
 
 		char c = getch();
 		if (c == KEY_RIGHT){
@@ -87,11 +92,11 @@ void *inc_x(void *x_void_ptr) {
         	pthread_create(&thread1, NULL, &tothread, NULL);
 			pthread_join(thread1, NULL);
         }else {
-        	
+
         }
 	}
 	explode = 1;
-	
+
 	return NULL;
 }
 
@@ -106,7 +111,7 @@ void *inc_x(void *x_void_ptr) {
 	long int location = 0;
 	color X, C, B;
 
-	X = colorBlack();	
+	X = colorBlack();
 	C = colorYellow();
 	B = colorBlue();
 
@@ -144,37 +149,37 @@ void *inc_x(void *x_void_ptr) {
 	displayHeight = vinfo.yres;
 
 	P.x = displayWidth / 2;
-	P.y = 740; 
- 
-	// this variable is our reference to the thread 
+	P.y = 740;
+
+	// this variable is our reference to the thread
 	pthread_t inc_x_thread, secondThread;
 
-	 //create a thread which executes inc_x(&x) 
+	 //create a thread which executes inc_x(&x)
 	if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
 		fprintf(stderr, "Error creating thread\n");
 		return 1;
 	}
 	int done = 0;
-	printBackground(X);	
+	printBackground(X);
 	while (endSign == 0){
-		// pesawat terbang disini 
+		// pesawat terbang disini
 		int counter = 0;
 		indeksJPesawat = 240;
-		sign = 0;  
+		sign = 0;
 		indeksIPesawat = 1000;
 
 		while(indeksIPesawat > 20 && endSign == 0){
 			direction = 1;
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C);
-			fill_planeToLeft(indeksIPesawat, indeksJPesawat, B,  C, X);  
+			fill_planeToLeft(indeksIPesawat, indeksJPesawat, B,  C, X);
 	  		usleep(50000);
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
-	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);  
-	  		
+	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);
+
 	 	    if (indeksJPesawat <= 100)
 	 	    	sign = 1;
 	 	    else if (indeksJPesawat >= 340)
-	 	    	sign = 0; 
+	 	    	sign = 0;
 
 	 	    if (sign == 0)
 	 	    	indeksJPesawat -= 10;
@@ -182,7 +187,7 @@ void *inc_x(void *x_void_ptr) {
 	 	    	indeksJPesawat += 15;
 
 	 	    buildHalfCannon(P, B);
-	 	    
+
 
 	 	    if (counter==1){
 	 	    	counter=0;
@@ -190,15 +195,15 @@ void *inc_x(void *x_void_ptr) {
 	 	    counter++;
 	 	    indeksIPesawat -= 10;
 	  	}
-	 
+
 	  	counter=0;
 	  	indeksIPesawat = 20;
 	  	while (indeksIPesawat < 1250 && endSign == 0){
 	  		direction = -1;
-	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C); 
+	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C);
 	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, B,  C, X);
 	  		usleep(50000);
-	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X); 
+	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X);
 	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, X,  C, B);
 
 	 	    if (indeksJPesawat <= 100)
@@ -212,7 +217,7 @@ void *inc_x(void *x_void_ptr) {
 	 	    	indeksJPesawat += 15;
 
 	 	    buildHalfCannon(P, B);
-	
+
 	 	    if (counter==1){
 	 	    	counter=0;
 	 	    }
@@ -220,7 +225,7 @@ void *inc_x(void *x_void_ptr) {
 	 	    indeksIPesawat += 10;
 	  	}
 	}
-	 
+
 	endSign = 1;
     pthread_join(inc_x_thread, NULL);
 	munmap(fbp, screensize);

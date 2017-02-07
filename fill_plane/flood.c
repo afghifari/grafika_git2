@@ -1,4 +1,4 @@
-#include "plane.c"
+#include "flood.h"
 
 color get_pixel (int loc_x, int loc_y) {
 	color initial;
@@ -9,7 +9,7 @@ color get_pixel (int loc_x, int loc_y) {
 		for (i = loc_x; i < (loc_x + 1); i++) {
 			for (j = loc_y; j < (loc_y + 1); j++) {
 				location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
-				
+
 				if (fbp + location) {  	//check for segmentation fault
 					initial.B = (*(fbp + location));
 		            initial.G = (*(fbp + location + 1));
@@ -50,7 +50,7 @@ void boundary_fill (int x, int y, color new_color, color f_color, color b_color)
 			boundary_fill(x+1, y+1, new_color, f_color, b_color);
 			boundary_fill(x-1, y+1, new_color, f_color, b_color);
 			boundary_fill(x-1, y-1, new_color, f_color, b_color);
-			boundary_fill(x+1, y-1, new_color, f_color, b_color);	
+			boundary_fill(x+1, y-1, new_color, f_color, b_color);
 		}
 	}
 }
