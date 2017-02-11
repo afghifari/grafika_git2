@@ -2,7 +2,7 @@
 
 void buildRocket(int x, int y, color c){
   	//making list of points
-	Point* PointList = (Point*) malloc(sizeof(Point)*7);
+	Point* PointList = (Point*) malloc(sizeof(Point)*9);
 
   // body
 	PointList[0].x = x;
@@ -14,8 +14,9 @@ void buildRocket(int x, int y, color c){
 	PointList[2].x = x - 10;
 	PointList[2].y = y + 30;
 
+	// printf("before draw Triangle\n");
 	drawPolygon(3, PointList, c, 2);
-
+	// printf("after draw Triangle\n");
   // body
 	PointList[1].x = x + 10;
 	PointList[1].y = y + 30;
