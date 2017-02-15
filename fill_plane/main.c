@@ -180,7 +180,7 @@ void *inc_x(void *x_void_ptr) {
 				fill_planeToLeft(indeksIPesawat, indeksJPesawat, B,  C, X);
 				buildFourBlade( indeksIPesawat - 100, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
 
-				usleep(50000);
+				usleep(10000);
 				cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
 	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);

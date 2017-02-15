@@ -39,7 +39,8 @@ void orang_terjun(int x, int y, color c) {
 	// while (1)
 	// {
 	int status = 0;
-		while (1) {
+	int sum = 0;
+		while (sum<200) {
 			if (P2.y <= 700 && status == 0)
 			{
 				// drawBresenhamLine(P1, P2, c, 40);
@@ -53,7 +54,6 @@ void orang_terjun(int x, int y, color c) {
 				P2.y += 4;
 				if (P2.y > 700)
 					status = 1;
-				continue;
 			}
 			else if (P2.y >= 300 && status != 0)
 			{
@@ -69,7 +69,6 @@ void orang_terjun(int x, int y, color c) {
 				P2.y -= 4;
 				if (P2.y < 300)
 					status = 0;
-				continue;
 			}
 			// if (direction == 1){
 			// 	if ((P2.x >= indeksIPesawat && P2.x < indeksIPesawat+180) && (P2.y < indeksJPesawat) ) {
@@ -85,7 +84,7 @@ void orang_terjun(int x, int y, color c) {
 			// 		buildBenda(P2.x+40, P2.y+40, C);
 			// 	}
 			// }
-
+			sum++;
 		}
 		// usleep(10000);
 		// while (P2.y >= 200) {
