@@ -4,6 +4,7 @@
 #include "square.h"
 #include "line.h"
 #include "bendamantul.h"
+#include "propeller.h"
 
 #include <termios.h>
 #include <unistd.h>
@@ -164,6 +165,8 @@ void *inc_x(void *x_void_ptr) {
 	}
 	int done = 0;
 	printBackground(X);
+
+
 	while (endSign == 0){
 		// pesawat terbang disini
 		int counter = 0;
@@ -174,8 +177,11 @@ void *inc_x(void *x_void_ptr) {
 		while(indeksIPesawat > 20 && endSign == 0){
 			direction = 1;
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C);
-			fill_planeToLeft(indeksIPesawat, indeksJPesawat, B,  C, X);
-	  		usleep(50000);
+				fill_planeToLeft(indeksIPesawat, indeksJPesawat, B,  C, X);
+				buildFourBlade( indeksIPesawat - 100, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
+
+				usleep(50000);
+				cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
 	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);
 
@@ -227,7 +233,7 @@ void *inc_x(void *x_void_ptr) {
 	 	    counter++;
 	 	    indeksIPesawat += 10;
 	  	}
-	  	
+
 	}
 
 	endSign = 1;
