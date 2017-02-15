@@ -3,6 +3,7 @@
 #include "cannon.h"
 #include "square.h"
 #include "line.h"
+#include "bendamantul.h"
 
 #include <termios.h>
 #include <unistd.h>
@@ -66,6 +67,8 @@ void *tothread(){
 	yellow = colorYellow();
 	shootCannon(P.x, P.y, yellow);
 }
+
+
 
 /* this function is run by the second thread */
 void *inc_x(void *x_void_ptr) {
