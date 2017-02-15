@@ -1,5 +1,6 @@
 #include "cannon.h"
 #include "bendamantul.h"
+#include "propeller.h"
 
 int cannonX;
 int cannonY;
@@ -46,7 +47,10 @@ void orang_terjun(int x, int y, color c) {
 				// drawBresenhamLine(P1, P2, c, 40);
 				buildBenda(P2.x +2, P2.y - 40, c);
 				// boundary_fill (P2.x, P2.y - 20, B, C, X) ;
+				buildFourBlade( P2.x - P2.y*1.5, P2.y, C, B, X, 200-0.05*P2.y);
+				// boundary_fill (P2.x, P2.y - 20, B, C, X) ;
 				usleep(10000);
+				cleanFourBlade( P2.x - P2.y*1.5, P2.y, X);
 				// drawBresenhamLine(P1, P2, black, 40);
 				buildBenda(P2.x +2, P2.y - 40, black);		
 				// boundary_fill (P2.x, P2.y - 20, X, C, B);
