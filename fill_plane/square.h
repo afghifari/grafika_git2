@@ -8,6 +8,7 @@
 #include <linux/fb.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
+#include "color.h"
 
 #define SIZE 10
 
@@ -24,12 +25,6 @@ extern int direction;
 extern int hit;
 
 
-/*color struct consists of Red, Green, and Blue */
-typedef struct {
-    int R;
-    int G;
-    int B;
-} color;
 
 /*
 edge    : square size
@@ -40,5 +35,12 @@ C       : color struct (Red, Green, Blue)
 void printSquare (int edge, int loc_x, int loc_y, color C);
 
 void printBackground(color C);
+
+void printPixel(int x,int y, color C);
+
+void printRect( int x, int y, int w, int h, color C);
+
+// dst, src
+void copyPixel(int dx, int dy, int sx, int sy);
 
 #endif

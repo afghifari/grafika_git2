@@ -4,11 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "square.h"
-
-typedef struct {
-	int x;
-	int y;
-} Point;
+#include "point.h"
 
 
 void swap (int *a, int *b);
