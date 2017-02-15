@@ -1,7 +1,7 @@
-all: myPlane
+all: clean myPlane
 
 myPlane:
-	gcc -o myPlane fill_plane/*.c -lpthread
+	gcc -o myPlane fill_plane/*.c -lpthread -lm
 
 clean:
 	$(RM) myPlane
