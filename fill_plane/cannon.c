@@ -173,27 +173,37 @@ void shootCannon(int x, int y, color c) {
 		P2.y -= 4;
 		if (direction == 1){
 			// printf("x : %d, y: %d \n", P2.x, P2.y);
-			if ((P2.x >= indeksIPesawat && P2.x < indeksIPesawat+180) && (P2.y < indeksJPesawat) ) {
+			if ((P2.x >= indeksIPesawat && P2.x < indeksIPesawat+180) && (P2.y - 22 < indeksJPesawat) ) {
 				endSign = 1;
 				hit = 1;
 				P2.x += 20;
 				P2.y += 20;
-				drawExplosion(P2);
-				orang_terjun(P2.x+40, P2.y+40, C);
-				break;
+				buildRocket(P2.x +2, P2.y - 40, black);
+				boundary_fill (P2.x, P2.y - 20, X, C, B);
+
+				cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
+				buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
+	  			fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);
 			}
 		}else {
 			// printf("x : %d, y: %d \n", P2.x, P2.y);
-			if ((P2.x <= indeksIPesawat && P2.x > indeksIPesawat-180) && (P2.y < indeksJPesawat) ) {
+			if ((P2.x <= indeksIPesawat && P2.x > indeksIPesawat-180) && (P2.y - 22 < indeksJPesawat) ) {
 				endSign = 1;
 				hit = 1;
 				P2.x += 20;
 				P2.y += 20;
-				drawExplosion(P2);
-				orang_terjun(P2.x+40, P2.y+40, C);
-				break;
+				buildRocket(P2.x +2, P2.y - 40, black);
+				boundary_fill (P2.x, P2.y - 20, X, C, B);
+
+				cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
+				buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
+	  			fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);
 			}
 		}
 
+	}
+	if (hit==1) {
+		drawExplosion(P2);
+		orang_terjun(P2.x+40, P2.y+40, C);
 	}
 }
