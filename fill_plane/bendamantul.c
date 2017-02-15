@@ -7,7 +7,7 @@ void buildBenda(int x, int y, color c)
 
   	// body
 	PointList[0].x = x;
-	PointList[0].y = y + 40;
+	PointList[0].y = y + 20;
 
 	PointList[1].x = x - 70;
 	PointList[1].y = y - 80;
@@ -39,6 +39,70 @@ void buildBenda(int x, int y, color c)
 	Phead.x = x;
 	Phead.y = y;
 	drawCircle(20, Phead, 2, c);
+
+	PointList[0].x = x;
+	PointList[0].y = y + 20;
+
+	PointList[1].x = x;
+	PointList[1].y = y + 80;
+
+	drawPolyline(2, PointList, c, 2);
+
+	// Kaki kiri
+	PointList[0].x = x;
+	PointList[0].y = y + 80;
+
+	PointList[1].x = x - 10;
+	PointList[1].y = y + 100;
+
+	drawPolyline(2, PointList, c, 2);
+
+	// Kaki kanan
+	PointList[0].x = x;
+	PointList[0].y = y + 80;
+
+	PointList[1].x = x + 10;
+	PointList[1].y = y + 100;
+
+	drawPolyline(2, PointList, c, 2);
+
+	// Tangan atas kiri
+	PointList[0].x = x;
+	PointList[0].y = y + 50;
+
+	PointList[1].x = x - 30;
+	PointList[1].y = y - 10;
+
+	drawPolyline(2, PointList, c, 2);
+
+	// Tangan bawah kiri
+	PointList[0].x = x - 30;
+	PointList[0].y = y - 10;
+
+	PointList[1].x = x - 25;
+	PointList[1].y = y - 15;
+
+	drawPolyline(2, PointList, c, 2);
+
+	// Tangan atas kanan
+	PointList[0].x = x;
+	PointList[0].y = y + 50;
+
+	PointList[1].x = x + 30;
+	PointList[1].y = y - 10;
+
+	drawPolyline(2, PointList, c, 2);
+
+	// Tangan bawah kanan
+	PointList[0].x = x + 30;
+	PointList[0].y = y - 10;
+
+	PointList[1].x = x + 25;
+	PointList[1].y = y - 15;
+
+	drawPolyline(2, PointList, c, 2);
+
+
 
   	// body
 
