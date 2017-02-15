@@ -4,15 +4,6 @@ void buildRocket(int x, int y, color c){
   	//making list of points
 	Point* PointList = (Point*) malloc(sizeof(Point)*9);
 
-	//titik atas
-	PointList[0].x = x;
-	PointList[0].y = y - 20;
-
-	PointList[1].x = x;
-	PointList[1].y = y - 18;
-
-	drawPolygon(2, PointList, c, 3);
-
   // body
 	PointList[0].x = x;
 	PointList[0].y = y;

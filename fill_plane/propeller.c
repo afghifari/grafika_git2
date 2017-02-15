@@ -47,6 +47,5 @@ void buildFourBlade(int cx, int cy, color line_color, color fill_color, color ba
 }
 
 void cleanFourBlade( int cx, int cy, color background_color){
-  printSquare(80, cx-40, cy-40, background_color);
-
+  printSquare(90, cx-40, cy-40, background_color);
 }

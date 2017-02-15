@@ -7,6 +7,30 @@ int cannonY;
 int destProjectile;
 int sentx, senty;
 
+
+void *thread2Procedure(void *x_void_ptr) {
+	color X;
+	X.R = 0;
+	X.G = 0;
+	X.B = 0;
+
+	color C;
+	C.R = 255; //255 10
+	C.G = 255; //255 -1
+	C.B = 10; //10 -1
+
+	indeksIPesawat += 500;
+
+	while(indeksJPesawat + 50 < vinfo.yres) {
+		buildCrashPlane(indeksIPesawat, indeksJPesawat, C);
+		usleep(10000);
+		buildCrashPlane(indeksIPesawat, indeksJPesawat, X);
+		indeksIPesawat += 10;
+		indeksJPesawat += 10;
+	}
+	return NULL;
+}
+
 void orang_terjun(int x, int y, color c) {
 	color black;
 	black.R = 0;
@@ -41,7 +65,7 @@ void orang_terjun(int x, int y, color c) {
 	// {
 	int status = 0;
 	int sum = 0;
-		while (sum<200) {
+		while (sum<230) {
 			if (P2.y <= 700 && status == 0)
 			{
 				// drawBresenhamLine(P1, P2, c, 40);
@@ -135,6 +159,9 @@ void buildCannon(int x, int y, color c) {
 }
 
 void shootCannon(int x, int y, color c) {
+	pthread_t thread2;
+	int xx = 0;
+
 	color black;
 	black.R = 0;
 	black.G = 0;
@@ -177,13 +204,11 @@ void shootCannon(int x, int y, color c) {
 		P2.y -= 4;
 		if (direction == 1){
 			// printf("x : %d, y: %d \n", P2.x, P2.y);
-			if ((P2.x >= indeksIPesawat && P2.x < indeksIPesawat+180) && (P2.y - 22 < indeksJPesawat) ) {
+			if ((P2.x >= indeksIPesawat - 60 && P2.x < indeksIPesawat + 260) && (P2.y < indeksJPesawat + 60) ) {
 				endSign = 1;
 				hit = 1;
 				P2.x += 20;
 				P2.y += 20;
-				buildRocket(P2.x +2, P2.y - 40, black);
-				boundary_fill (P2.x, P2.y - 20, X, C, B);
 
 				cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
 				buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
@@ -191,23 +216,30 @@ void shootCannon(int x, int y, color c) {
 			}
 		}else {
 			// printf("x : %d, y: %d \n", P2.x, P2.y);
-			if ((P2.x <= indeksIPesawat && P2.x > indeksIPesawat-180) && (P2.y - 22 < indeksJPesawat) ) {
+			if ((P2.x <= indeksIPesawat + 60 && P2.x > indeksIPesawat - 260) && (P2.y + 50 < indeksJPesawat + 60) ) {
 				endSign = 1;
 				hit = 1;
 				P2.x += 20;
 				P2.y += 20;
-				buildRocket(P2.x +2, P2.y - 40, black);
-				boundary_fill (P2.x, P2.y - 20, X, C, B);
 
 				cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
-				buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
-	  			fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);
+				buildPlaneToRight(indeksIPesawat, indeksJPesawat, X);
+	  			fill_planeToRight(indeksIPesawat, indeksJPesawat, X,  C, B);
 			}
 		}
 
 	}
 	if (hit==1) {
+		//create a thread which executes inc_x(&x)
+		if(pthread_create(&thread2, NULL, thread2Procedure, &xx)) {
+			fprintf(stderr, "Error creating thread\n");
+		}
 		drawExplosion(P2);
-		orang_terjun(P2.x+40, P2.y+40, C);
+		P2.x += 300;
+		drawExplosion(P2);
+		P2.x -= 150;
+		P2.y -= 70;
+		drawExplosion(P2);
+		orang_terjun(P2.x+20, P2.y+40, C);
 	}
 }

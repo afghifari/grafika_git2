@@ -156,11 +156,11 @@ void *inc_x(void *x_void_ptr) {
 	P.y = 740;
 
 	// this variable is our reference to the thread
-	pthread_t inc_x_thread, secondThread;
+	pthread_t inc_x_thread;
 
 	 //create a thread which executes inc_x(&x)
 	if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
-		fprintf(stderr, "Error creating thread\n");
+		fprintf(stderr, "Error creating thread 1\n");
 		return 1;
 	}
 	int done = 0;
@@ -211,7 +211,9 @@ void *inc_x(void *x_void_ptr) {
 	  		direction = -1;
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C);
 	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, B,  C, X);
-	  		usleep(50000);
+	  		buildFourBlade( indeksIPesawat - 100, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
+			usleep(20000);
+			cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X);
 	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, X,  C, B);
 

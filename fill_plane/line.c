@@ -174,14 +174,20 @@ void drawExplosion (Point initialPoint) {
 	C.G = 114;
 	C.B = 53;
 	int i;
-	for(i=0;i<60;i+=3)
+	for(i=0;i<200;i+=3){
 		drawCircle (i, initialPoint, 5, C);
+		initialPoint.x -= 3;
+		usleep(4000);
+	}
 
-	initialPoint.x += 30;
+	initialPoint.x -= 130;
 	initialPoint.y += 50;
 
-	for(i=0;i<70;i+=3)
+	for(i=0;i<140;i+=3){
 		drawCircle (i, initialPoint, 5, C);
+		initialPoint.x += 1;
+		usleep(4000);
+	}
 }
 
 void plot8pixel (Point P, int p, int q, int W, color C) {

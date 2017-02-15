@@ -79,7 +79,7 @@ void buildPlaneToRight(int x, int y, color c) {
 	PointList[3].y = planeY;
 
 	drawPolygon(4, PointList, c, 2);
-  free(PointList);
+  	free(PointList);
 }
 
 void buildPlaneToLeft(int x, int y, color c){
