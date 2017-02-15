@@ -36,7 +36,7 @@ void buildPlaneToRight(int x, int y, color c) {
 	PointList[5].y = planeY + 80;
 	planeY += 80;
 
-	drawPolygon(6, PointList, c, 2);
+	drawPolygon(6, PointList, c, 5);
 
 	planeX = x - 100;
 	planeY = y - 25;
@@ -57,7 +57,7 @@ void buildPlaneToRight(int x, int y, color c) {
 	planeX += 50;
 	PointList[3].y = planeY;
 
-	drawPolygon(4, PointList, c, 2);
+	drawPolygon(4, PointList, c, 5);
 
 	planeX = x - 100;
 	planeY = y - 45;
@@ -115,7 +115,7 @@ void buildPlaneToLeft(int x, int y, color c){
 	PointList[5].y = planeY + 80;
 	planeY += 80;
 
-	drawPolygon(6, PointList, c, 2);
+	drawPolygon(6, PointList, c, 5);
 
 	planeX = x + 100;
 	planeY = y - 25;
@@ -136,7 +136,7 @@ void buildPlaneToLeft(int x, int y, color c){
 	planeX -= 50;
 	PointList[3].y = planeY;
 
-	drawPolygon(4, PointList, c, 2);
+	drawPolygon(4, PointList, c, 5);
 
 	planeX = x + 100;
 	planeY = y - 45;
@@ -157,7 +157,7 @@ void buildPlaneToLeft(int x, int y, color c){
 	planeX -= 50;
 	PointList[3].y = planeY;
 
-	drawPolygon(4, PointList, c, 2);
+	drawPolygon(4, PointList, c, 5);
   free(PointList);
 }
 
