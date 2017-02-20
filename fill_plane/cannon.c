@@ -230,16 +230,21 @@ void shootCannon(int x, int y, color c) {
 
 	}
 	if (hit==1) {
-		//create a thread which executes inc_x(&x)
-		if(pthread_create(&thread2, NULL, thread2Procedure, &xx)) {
-			fprintf(stderr, "Error creating thread\n");
+		int forking;
+		forking = fork();
+		if (forking==0)
+			orang_terjun(P2.x+20, P2.y+40, C);
+		else if (forking>0) {
+			//create a thread which executes inc_x(&x)
+			if(pthread_create(&thread2, NULL, thread2Procedure, &xx)) {
+				fprintf(stderr, "Error creating thread\n");
+			}
+			drawExplosion(P2);
+			P2.x += 300;
+			drawExplosion(P2);
+			P2.x -= 150;
+			P2.y -= 70;
+			drawExplosion(P2);
 		}
-		drawExplosion(P2);
-		P2.x += 300;
-		drawExplosion(P2);
-		P2.x -= 150;
-		P2.y -= 70;
-		drawExplosion(P2);
-		orang_terjun(P2.x+20, P2.y+40, C);
 	}
 }

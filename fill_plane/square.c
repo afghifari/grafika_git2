@@ -21,7 +21,7 @@ C       : color struct (Red, Green, Blue)
 void printSquare (int edge, int loc_x, int loc_y, color C) {
     long int location;
     int i,j;
-    if (((loc_x)>=0) && ((loc_x + edge)<vinfo.xres) && ((loc_y)>=0) && ((loc_y + edge)<vinfo.yres)) {
+    if (((loc_x)>=149) && ((loc_x + edge)<vinfo.xres - 140) && ((loc_y)>=50) && ((loc_y + edge)<vinfo.yres - 80)) {
 		for (i = loc_x; i < (loc_x+edge); i++) {
 			for (j = loc_y; j < (loc_y+edge); j++) {
 				location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
@@ -50,36 +50,38 @@ void printSquare (int edge, int loc_x, int loc_y, color C) {
 void printRect( int loc_x, int loc_y, int h, int w, color C){
   long int location;
   int i,j;
-  if (((loc_x)>=0) && ((loc_x + w)<vinfo.xres) && ((loc_y)>=0) && ((loc_y + h)<vinfo.yres)) {
-  for (i = loc_x; i < (loc_x+w); i++) {
-    for (j = loc_y; j < (loc_y+h); j++) {
-      location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
-      if (fbp + location) { //check for segmentation fault
-        if (vinfo.bits_per_pixel == 32) {
-          *(fbp + location) = C.B;            //Blue
-          *(fbp + location + 1) = C.G;        //Green
-          *(fbp + location + 2) = C.R;        //Red
-          *(fbp + location + 3) = 0;          //Transparancy
-        } else  { //assume 16bpp
-          int r = C.R;     //Red
-          int g = C.G;     //Green
-          int b = C.B;     //Blue
+  int edge = 1;
+  //if (((loc_x)>=0) && ((loc_x + w)<vinfo.xres) && ((loc_y)>=0) && ((loc_y + h)<vinfo.yres)) {
+  if (((loc_x)>=149) && ((loc_x + edge)<vinfo.xres - 140) && ((loc_y)>=50) && ((loc_y + edge)<vinfo.yres - 80)) {
+    for (i = loc_x; i < (loc_x+w); i++) {
+      for (j = loc_y; j < (loc_y+h); j++) {
+        location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
+        if (fbp + location) { //check for segmentation fault
+          if (vinfo.bits_per_pixel == 32) {
+            *(fbp + location) = C.B;            //Blue
+            *(fbp + location + 1) = C.G;        //Green
+            *(fbp + location + 2) = C.R;        //Red
+            *(fbp + location + 3) = 0;          //Transparancy
+          } else  { //assume 16bpp
+            int r = C.R;     //Red
+            int g = C.G;     //Green
+            int b = C.B;     //Blue
 
-          unsigned short int t = r<<11 | g << 5 | b;
-          *((unsigned short int*)(fbp + location)) = t;
+            unsigned short int t = r<<11 | g << 5 | b;
+            *((unsigned short int*)(fbp + location)) = t;
+          }
+        } else {
+          return;
         }
-      } else {
-        return;
       }
     }
   }
 }
-}
 
 
 void printPixel(int x,int y, color C){
-  if( x < 0 || x >= vinfo.xres ) return;
-  if( y < 0 || y >= vinfo.yres ) return;
+  if( x < 149 || x >= vinfo.xres - 140) return;
+  if( y < 50 || y >= vinfo.yres - 80) return;
   long int location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (y+vinfo.yoffset) * finfo.line_length;
   if (vinfo.bits_per_pixel == 32) {
       *(fbp + location) = C.B;         //Blue
@@ -97,10 +99,10 @@ void printPixel(int x,int y, color C){
 }
 
 void copyPixel(int dx, int dy, int sx, int sy){
-  if( sx < 0 || sx >= vinfo.xres ) return;
-  if( sy < 0 || sy >= vinfo.yres ) return;
-  if( dx < 0 || dx >= vinfo.xres ) return;
-  if( dy < 0 || dy >= vinfo.yres ) return;
+  if( sx < 149 || sx >= vinfo.xres - 140 ) return;
+  if( sy < 50 || sy >= vinfo.yres - 80) return;
+  if( dx < 149 || dx >= vinfo.xres - 140) return;
+  if( dy < 50 || dy >= vinfo.yres - 80) return;
 
   long int src = (sx+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (sy+vinfo.yoffset) * finfo.line_length;
   long int dst = (dx+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (dy+vinfo.yoffset) * finfo.line_length;

@@ -166,8 +166,9 @@ void *inc_x(void *x_void_ptr) {
 	int done = 0;
 	printBackground(X);
 
-
+// buildSquare(80, 600, C);
 	while (endSign == 0){
+
 		// pesawat terbang disini
 		int counter = 0;
 		indeksJPesawat = 240;
@@ -175,13 +176,14 @@ void *inc_x(void *x_void_ptr) {
 		indeksIPesawat = 1000;
 
 		while(indeksIPesawat > 20 && endSign == 0){
+			buildSquareLine(80, 600, C);
 			direction = 1;
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C);
 				fill_planeToLeft(indeksIPesawat, indeksJPesawat, B,  C, X);
-				buildFourBlade( indeksIPesawat - 100, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
+				buildFourBlade( indeksIPesawat - 50, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
 
 				usleep(20000);
-				cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
+				cleanFourBlade( indeksIPesawat - 50, indeksJPesawat, X);
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
 	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);
 
@@ -208,12 +210,13 @@ void *inc_x(void *x_void_ptr) {
 	  	counter=0;
 	  	indeksIPesawat = 20;
 	  	while (indeksIPesawat < 1250 && endSign == 0){
+	  		buildSquareLine(80, 600, C);
 	  		direction = -1;
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C);
 	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, B,  C, X);
-	  		buildFourBlade( indeksIPesawat - 100, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
+	  		buildFourBlade( indeksIPesawat + 50, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
 			usleep(20000);
-			cleanFourBlade( indeksIPesawat - 100, indeksJPesawat, X);
+			cleanFourBlade( indeksIPesawat + 50, indeksJPesawat, X);
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X);
 	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, X,  C, B);
 
@@ -240,6 +243,7 @@ void *inc_x(void *x_void_ptr) {
 
 	endSign = 1;
     pthread_join(inc_x_thread, NULL);
+    buildSquareLine(80, 600, C);
 	munmap(fbp, screensize);
 	close(fbfd);
 	return 0;

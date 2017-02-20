@@ -36,7 +36,7 @@ color get_pixel (int loc_x, int loc_y) {
 void boundary_fill (int x, int y, color new_color, color f_color, color b_color) {
 
 	color current;
-	if ((x >= 0) && (x < vinfo.xres - 2) && (y >= 0) && (y < vinfo.yres - 2)) {
+	if ((x >= 160) && (x < vinfo.xres - 160) && (y >= 60) && (y < vinfo.yres - 110)) {
 		current = get_pixel(x, y);
 		if ((current.R != f_color.R) && (current.G != f_color.G) && (current.B != f_color.B)
 		     &&
