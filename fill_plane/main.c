@@ -108,6 +108,7 @@ void *inc_x(void *x_void_ptr) {
  {
  	hit = 0;
 	int x = 0, y = 0;
+	int scala, scalaCounter, flagScala;
 	direction = 0;
 	int sign;
 	endSign = 0;
@@ -167,6 +168,9 @@ void *inc_x(void *x_void_ptr) {
 	printBackground(X);
 
 // buildSquare(80, 600, C);
+	scalaCounter = 20;
+	flagScala = 1;
+	scala = 6;
 	while (endSign == 0){
 
 		// pesawat terbang disini
@@ -178,14 +182,14 @@ void *inc_x(void *x_void_ptr) {
 		while(indeksIPesawat > 20 && endSign == 0){
 			buildSquareLine(80, 600, C);
 			direction = 1;
-	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C);
-				fill_planeToLeft(indeksIPesawat, indeksJPesawat, B,  C, X);
+	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C, scala);
+				fill_planeToLeft(indeksIPesawat, indeksJPesawat, scala, B,  C, X);
 				buildFourBlade( indeksIPesawat - 50, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
 
-				usleep(20000);
+				usleep(50000);
 				cleanFourBlade( indeksIPesawat - 50, indeksJPesawat, X);
-	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X);
-	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, X,  C, B);
+	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X, scala);
+	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, scala, X,  C, B);
 
 	 	    if (indeksJPesawat <= 100)
 	 	    	sign = 1;
@@ -205,6 +209,24 @@ void *inc_x(void *x_void_ptr) {
 	 	    }
 	 	    counter++;
 	 	    indeksIPesawat -= 10;
+
+	 	    if (scalaCounter % 5 == 0 && scalaCounter > 20)
+				scala++;
+			else if (scalaCounter % 5 == 0 && scalaCounter < 20)
+				scala--;
+
+			if (scalaCounter == 40) {
+				scalaCounter = 20;
+				flagScala = 0;
+			} else if (scalaCounter == 0) {
+				scalaCounter = 20;
+				flagScala = 1;
+			}
+
+			if (flagScala==1)
+				scalaCounter++;
+			else
+				scalaCounter--;
 	  	}
 
 	  	counter=0;
@@ -212,13 +234,13 @@ void *inc_x(void *x_void_ptr) {
 	  	while (indeksIPesawat < 1250 && endSign == 0){
 	  		buildSquareLine(80, 600, C);
 	  		direction = -1;
-	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C);
-	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, B,  C, X);
-	  		buildFourBlade( indeksIPesawat + 50, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
-			usleep(20000);
-			cleanFourBlade( indeksIPesawat + 50, indeksJPesawat, X);
-	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X);
-	  		fill_planeToRight(indeksIPesawat, indeksJPesawat, X,  C, B);
+	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C, scala);
+	  			 fill_planeToRight(indeksIPesawat, indeksJPesawat, scala, B,  C, X);
+		  		buildFourBlade( indeksIPesawat + 50, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
+				usleep(50000);
+				cleanFourBlade( indeksIPesawat + 50, indeksJPesawat, X);
+	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X, scala);
+	  		 	fill_planeToRight(indeksIPesawat, indeksJPesawat, scala, X,  C, B);
 
 	 	    if (indeksJPesawat <= 100)
 	 	    	sign = 1;
