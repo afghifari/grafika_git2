@@ -11,6 +11,12 @@
 #include "color.h"
 
 #define SIZE 10
+#define LEFT_EDGE_DEFAULT 149
+#define RIGHT_EDGE_DEFAULT 140
+#define UP_EDGE_DEFAULT 50
+#define DOWN_EDGE_DEFAULT 80
+#define SEPARATOR 20
+
 
 extern int fbfd;
 extern struct fb_var_screeninfo vinfo;
@@ -23,6 +29,8 @@ extern int indeksIPesawat, indeksJPesawat;
 extern int endSign;
 extern int direction;
 extern int hit;
+
+int leftEdge, rightEdge, upEdge, downEdge;
 
 
 
@@ -39,6 +47,8 @@ void printBackground(color C);
 void printPixel(int x,int y, color C);
 
 void printRect( int x, int y, int w, int h, color C);
+
+void setEdgeLine (int leftedge, int rightedge, int upedge, int downedge);
 
 // dst, src
 void copyPixel(int dx, int dy, int sx, int sy);

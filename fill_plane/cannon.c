@@ -65,7 +65,20 @@ void orang_terjun(int x, int y, color c) {
 	// {
 	int status = 0;
 	int sum = 0;
+	int pid;
+	// pid = fork();
+	// if (pid==0)
+	// 	while (1) {
+	// 		setEdgeLine(P2.x - 155, P2.x + 175, P2.y - 185, P2.y + 185);
+	// 		buildSquareLine(P2.x - 150, P2.x + 170, P2.y - 180, P2.y + 180, C);
+	// 	}
+	// else
+	printBackground(X);
 		while (sum<230) {
+					setEdgeLine(P2.x - 255, P2.x - 275, P2.y - 285, P2.y - 285);
+			buildSquareLine(P2.x - 250, P2.x + 170, P2.y - 180, P2.y + 180, C);	
+			usleep(5000);
+			buildSquareLine(P2.x - 50, P2.x + 50, P2.y - 80, P2.y + 80, X);	
 			if (P2.y <= 700 && status == 0)
 			{
 				// drawBresenhamLine(P1, P2, c, 40);
@@ -232,19 +245,22 @@ void shootCannon(int x, int y, color c) {
 	if (hit==1) {
 		int forking;
 		forking = fork();
-		if (forking==0)
+		if (forking==0){
 			orang_terjun(P2.x+20, P2.y+40, C);
+			// buildSquareLine(int leftedgePar, int rightedgePar, int upedgePar, int downedgePar, color c) {
+		
+		}
 		else if (forking>0) {
 			//create a thread which executes inc_x(&x)
 			if(pthread_create(&thread2, NULL, thread2Procedure, &xx)) {
 				fprintf(stderr, "Error creating thread\n");
 			}
-			drawExplosion(P2);
+			//drawExplosion(P2);
 			P2.x += 300;
-			drawExplosion(P2);
+			//drawExplosion(P2);
 			P2.x -= 150;
 			P2.y -= 70;
-			drawExplosion(P2);
+			//drawExplosion(P2);
 		}
 	}
 }

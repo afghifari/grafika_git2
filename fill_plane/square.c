@@ -12,6 +12,13 @@ int endSign;
 int direction;
 int hit;
 
+void setEdgeLine (int leftedgePar, int rightedgePar, int upedgePar, int downedgePar) {
+    leftEdge = leftedgePar;
+    rightEdge = rightedgePar;
+    upEdge = upedgePar;
+    downEdge = downedgePar;
+}
+
 /*
 edge    : square size
 loc_x   : x coordinate
@@ -21,7 +28,8 @@ C       : color struct (Red, Green, Blue)
 void printSquare (int edge, int loc_x, int loc_y, color C) {
     long int location;
     int i,j;
-    if (((loc_x)>=149) && ((loc_x + edge)<vinfo.xres - 140) && ((loc_y)>=50) && ((loc_y + edge)<vinfo.yres - 80)) {
+    // if (((loc_x)>=149) && ((loc_x + edge)<vinfo.xres - 140) && ((loc_y)>=50) && ((loc_y + edge)<vinfo.yres - 80)) {
+    if (((loc_x)>=leftEdge) && ((loc_x + edge)<vinfo.xres - rightEdge) && ((loc_y)>=upEdge) && ((loc_y + edge)<vinfo.yres - downEdge)) {
 		for (i = loc_x; i < (loc_x+edge); i++) {
 			for (j = loc_y; j < (loc_y+edge); j++) {
 				location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
@@ -51,8 +59,9 @@ void printRect( int loc_x, int loc_y, int h, int w, color C){
   long int location;
   int i,j;
   int edge = 1;
-  //if (((loc_x)>=0) && ((loc_x + w)<vinfo.xres) && ((loc_y)>=0) && ((loc_y + h)<vinfo.yres)) {
-  if (((loc_x)>=149) && ((loc_x + edge)<vinfo.xres - 140) && ((loc_y)>=50) && ((loc_y + edge)<vinfo.yres - 80)) {
+  
+  //if (((loc_x)>=149) && ((loc_x + edge)<vinfo.xres - 140) && ((loc_y)>=50) && ((loc_y + edge)<vinfo.yres - 80)) {
+  if (((loc_x)>=leftEdge) && ((loc_x + edge)<vinfo.xres - rightEdge) && ((loc_y)>=upEdge) && ((loc_y + edge)<vinfo.yres - downEdge)) {
     for (i = loc_x; i < (loc_x+w); i++) {
       for (j = loc_y; j < (loc_y+h); j++) {
         location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
@@ -80,8 +89,8 @@ void printRect( int loc_x, int loc_y, int h, int w, color C){
 
 
 void printPixel(int x,int y, color C){
-  if( x < 149 || x >= vinfo.xres - 140) return;
-  if( y < 50 || y >= vinfo.yres - 80) return;
+  if( x < leftEdge || x >= vinfo.xres - rightEdge) return;
+  if( y < upEdge || y >= vinfo.yres - downEdge) return;
   long int location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (y+vinfo.yoffset) * finfo.line_length;
   if (vinfo.bits_per_pixel == 32) {
       *(fbp + location) = C.B;         //Blue
@@ -99,10 +108,10 @@ void printPixel(int x,int y, color C){
 }
 
 void copyPixel(int dx, int dy, int sx, int sy){
-  if( sx < 149 || sx >= vinfo.xres - 140 ) return;
-  if( sy < 50 || sy >= vinfo.yres - 80) return;
-  if( dx < 149 || dx >= vinfo.xres - 140) return;
-  if( dy < 50 || dy >= vinfo.yres - 80) return;
+  if( sx < leftEdge || sx >= vinfo.xres - rightEdge ) return;
+  if( sy < upEdge || sy >= vinfo.yres - downEdge) return;
+  if( dx < leftEdge || dx >= vinfo.xres - rightEdge) return;
+  if( dy < upEdge || dy >= vinfo.yres - downEdge) return;
 
   long int src = (sx+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (sy+vinfo.yoffset) * finfo.line_length;
   long int dst = (dx+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (dy+vinfo.yoffset) * finfo.line_length;

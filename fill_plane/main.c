@@ -17,6 +17,11 @@
 #define KEY_LEFT 68
 #define KEY_ENTER 10
 
+#define KEY_W 119
+#define KEY_S 115
+#define KEY_A 97
+#define KEY_D 100
+
 static int explode;
 static Point P;
 
@@ -70,6 +75,35 @@ void *tothread(){
 }
 
 
+void *thread33void(void *x_void_ptr) {
+
+	color C, X;
+	C = colorYellow();
+	X = colorBlack();
+	while(endSign == 0){
+
+		char c = getch();
+		if (c == KEY_W && upEdge > 10){
+			buildSquareLine(leftEdge, rightEdge + 10, upEdge, downEdge + 10, X);
+			upEdge -= 10;
+			downEdge -= 10;
+		}
+        else if (c == KEY_S && downEdge < vinfo.yres - 10) {
+        	buildSquareLine(leftEdge, rightEdge + 10, upEdge, downEdge + 10, X);
+        	upEdge += 10;
+			downEdge += 10;
+        }
+        else if (c == KEY_A && leftEdge > 10) {
+        	buildSquareLine(leftEdge, rightEdge + 10, upEdge, downEdge + 10, X);
+        	leftEdge -= 10;
+        	rightEdge -= 10;
+        }else if (c == KEY_D && rightEdge < vinfo.xres - 10) {
+        	buildSquareLine(leftEdge, rightEdge + 10, upEdge, downEdge + 10, X);
+        	leftEdge += 10;
+        	rightEdge += 10;
+        }
+	}
+}
 
 /* this function is run by the second thread */
 void *inc_x(void *x_void_ptr) {
@@ -157,20 +191,35 @@ void *inc_x(void *x_void_ptr) {
 	P.y = 740;
 
 	// this variable is our reference to the thread
-	pthread_t inc_x_thread;
+	pthread_t inc_x_thread, thread33;
 
-	 //create a thread which executes inc_x(&x)
+	//  //create a thread which executes inc_x(&x)
 	if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
+		fprintf(stderr, "Error creating thread 1\n");
+		return 1;
+	}
+
+	if(pthread_create(&thread33, NULL, thread33void, &y)) {
 		fprintf(stderr, "Error creating thread 1\n");
 		return 1;
 	}
 	int done = 0;
 	printBackground(X);
 
-// buildSquare(80, 600, C);
+	// leftEdge = LEFT_EDGE_DEFAULT;
+ //    rightEdge = RIGHT_EDGE_DEFAULT;
+ //    upEdge = UP_EDGE_DEFAULT;
+ //    downEdge = DOWN_EDGE_DEFAULT;
+
+	// set Flag
 	scalaCounter = 20;
 	flagScala = 1;
 	scala = 6;
+
+	// setting line edge
+	setEdgeLine(LEFT_EDGE_DEFAULT - SEPARATOR , RIGHT_EDGE_DEFAULT - SEPARATOR,
+				 UP_EDGE_DEFAULT - SEPARATOR, DOWN_EDGE_DEFAULT - SEPARATOR);
+
 	while (endSign == 0){
 
 		// pesawat terbang disini
@@ -179,14 +228,15 @@ void *inc_x(void *x_void_ptr) {
 		sign = 0;
 		indeksIPesawat = 1000;
 
-		while(indeksIPesawat > 20 && endSign == 0){
-			buildSquareLine(80, 600, C);
+		while(indeksIPesawat > 20 && endSign == 0){	
+
 			direction = 1;
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, C, scala);
 				fill_planeToLeft(indeksIPesawat, indeksJPesawat, scala, B,  C, X);
 				buildFourBlade( indeksIPesawat - 50, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
-
+				buildSquareLine(leftEdge, rightEdge + 10, upEdge, downEdge + 10, C);
 				usleep(50000);
+				
 				cleanFourBlade( indeksIPesawat - 50, indeksJPesawat, X);
 	  		buildPlaneToLeft(indeksIPesawat, indeksJPesawat, X, scala);
 	  		fill_planeToLeft(indeksIPesawat, indeksJPesawat, scala, X,  C, B);
@@ -232,12 +282,14 @@ void *inc_x(void *x_void_ptr) {
 	  	counter=0;
 	  	indeksIPesawat = 20;
 	  	while (indeksIPesawat < 1250 && endSign == 0){
-	  		buildSquareLine(80, 600, C);
+	  		
 	  		direction = -1;
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, C, scala);
-	  			 fill_planeToRight(indeksIPesawat, indeksJPesawat, scala, B,  C, X);
+	  			fill_planeToRight(indeksIPesawat, indeksJPesawat, scala, B,  C, X);
 		  		buildFourBlade( indeksIPesawat + 50, indeksJPesawat, C, B, X, 0.5*indeksJPesawat);
+		  		buildSquareLine(leftEdge, rightEdge + 10, upEdge, downEdge + 10, C);
 				usleep(50000);
+
 				cleanFourBlade( indeksIPesawat + 50, indeksJPesawat, X);
 	  		buildPlaneToRight(indeksIPesawat, indeksJPesawat, X, scala);
 	  		 	fill_planeToRight(indeksIPesawat, indeksJPesawat, scala, X,  C, B);
@@ -265,7 +317,8 @@ void *inc_x(void *x_void_ptr) {
 
 	endSign = 1;
     pthread_join(inc_x_thread, NULL);
-    buildSquareLine(80, 600, C);
+    pthread_join(thread33, NULL);
+		buildSquareLine(leftEdge, rightEdge, upEdge ,downEdge, C);    
 	munmap(fbp, screensize);
 	close(fbfd);
 	return 0;

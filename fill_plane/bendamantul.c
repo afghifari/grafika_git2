@@ -5,6 +5,10 @@ void buildBenda(int x, int y, color c)
   	//making list of points
 	Point* PointList = (Point*) malloc(sizeof(Point)*9);
 
+
+				// setEdgeLine(x - 355, x + 375, y - 385, y + 385);
+				// buildSquareLine(x - 150, x + 170, y - 180, y + 180, c);
+
   	// body
 	PointList[0].x = x;
 	PointList[0].y = y + 20;

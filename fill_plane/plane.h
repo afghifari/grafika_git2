@@ -8,6 +8,8 @@
 extern int planeX;
 extern int planeY;
 
+void buildSquareLine(int leftedgePar, int rightedgePar, int upedgePar, int downedgePar, color c);
+
 void buildPlaneToRight(int x, int y, color c, int scala);
 
 void buildPlaneToLeft(int x, int y, color c, int scala);

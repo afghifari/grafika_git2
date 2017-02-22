@@ -3,24 +3,33 @@
 int planeX;
 int planeY;
 
-void buildSquareLine(int x, int y, color c) {
+void buildSquareLine(int leftedgePar, int rightedgePar, int upedgePar, int downedgePar, color c) {
 	Point* PointList = (Point*) malloc(sizeof(Point)*4);
 
-	//assign global variables with the assigned parameters
-	planeX = x;
-	planeY = y;
+	// PointList[0].x = 150;
+	// PointList[0].y = vinfo.yres - 100 ;
 
-	PointList[0].x = 150;
-	PointList[0].y = vinfo.yres - 100 ;
+	// PointList[1].x = 150;
+	// PointList[1].y = 50;
 
-	PointList[1].x = 150;
-	PointList[1].y = 50;
+	// PointList[2].x = vinfo.xres - 150;
+	// PointList[2].y = 50;
 
-	PointList[2].x = vinfo.xres - 150;
-	PointList[2].y = 50;
+	// PointList[3].x = vinfo.xres - 150;
+	// PointList[3].y = vinfo.yres - 100 ;
 
-	PointList[3].x = vinfo.xres - 150;
-	PointList[3].y = vinfo.yres - 100 ;
+
+	PointList[0].x = leftedgePar;
+	PointList[0].y = vinfo.yres - downedgePar;
+
+	PointList[1].x = leftedgePar;
+	PointList[1].y = upedgePar;
+
+	PointList[2].x = vinfo.xres - rightedgePar;
+	PointList[2].y = upedgePar;
+
+	PointList[3].x = vinfo.xres - rightedgePar;
+	PointList[3].y = vinfo.yres - downedgePar;
 
 	drawPolygon(4, PointList, c, 5);
 	free(PointList);
