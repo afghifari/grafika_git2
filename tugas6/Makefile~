@@ -1,0 +1,7 @@
+all: mycolor
+
+mycolor:
+	gcc -o myColor buildITB/mColor.cpp buildITB/color.cpp -std=c++11
+
+clean:
+	$(RM) mycolor
