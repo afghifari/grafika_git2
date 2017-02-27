@@ -139,7 +139,7 @@ void printBackground(color C) {
     int height = displayHeight - 6;
     int i,j;
 
-    for (i = 0; i < width; i++) {
+    for (i = 0; i < width; i++) {5
         for (j = 0; j < height; j++) {
             location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
             if (vinfo.bits_per_pixel == 32) {
