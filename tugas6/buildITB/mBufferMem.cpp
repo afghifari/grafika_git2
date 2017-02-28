@@ -1,4 +1,5 @@
 #include "bufferMem.h"
+#include <iostream>
 
 using namespace std;
 
@@ -9,5 +10,7 @@ int main() {
 	color blackColor(0,0,0);
 
 	buf.printBackground(blackColor);
+	buf.printSquare (20, 234, 123, yellowColor);
+	buf.closeBuffer();
 	return 0;
 }

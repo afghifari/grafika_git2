@@ -17,6 +17,9 @@ class bufferMem {
 		bufferMem();
 		~bufferMem();
 
+		void closeBuffer();
+
+
 		void printSquare (int edge, int loc_x, int loc_y, color C);
 		void printBackground(color C);
 	private :

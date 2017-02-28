@@ -7,9 +7,6 @@ long int bufferMem::screensize = 0;
 char* bufferMem::fbp = NULL;
 
 bufferMem::bufferMem() {
-	fbfd = 0;
-	screensize = 0;
-	*fbp = 0;
 	fbfd = open("/dev/fb0", O_RDWR);
 	if (fbfd == -1) {
 	 perror("Error: cannot open framebuffer device");
@@ -45,6 +42,11 @@ bufferMem::bufferMem() {
 
 bufferMem::~bufferMem() {
 
+}
+
+void bufferMem::closeBuffer() {
+	munmap(fbp, screensize);
+	close(fbfd);
 }
 
 void bufferMem::printSquare (int edge, int loc_x, int loc_y, color C) {
