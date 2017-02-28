@@ -83,6 +83,39 @@ void bufferMem::printSquare (int edge, int loc_x, int loc_y, color C) {
 	}
 }
 
+void bufferMem::printSquareZoom(int edge, int loc_x, int loc_y, color C, double multiplier) {
+	long int location;
+    int i,j;
+    loc_x -= (edge*multiplier-edge)/2;
+    loc_y -= (edge*multiplier-edge)/2;
+    edge = multiplier*edge;
+    // i (((loc_x)>=149) && ((loc_x + edge)<vinfo.xres - 140) && ((loc_y)>=50) && ((loc_y + edge)<vinfo.yres - 80)) {
+    if (((loc_x)>= 0 ) && ((loc_x + edge)<vinfo.xres - 20) && ((loc_y) >= 0) && ((loc_y + edge)<vinfo.yres - 20)) {
+		for (i = loc_x; i < (loc_x+edge); i++) {
+			for (j = loc_y; j < (loc_y+edge); j++) {
+				location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
+				if (fbp + location) { //check for segmentation fault
+					if (vinfo.bits_per_pixel == 32) {
+						*(fbp + location) = C.getB();            //Blue
+						*(fbp + location + 1) = C.getG();        //Green
+						*(fbp + location + 2) = C.getR();        //Red
+						*(fbp + location + 3) = 0;          //Transparancy
+					} else  { //assume 16bpp
+						int r = C.getR();     //Red
+						int g = C.getG();     //Green
+						int b = C.getB();     //Blue
+
+						unsigned short int t = r<<11 | g << 5 | b;
+						*((unsigned short int*)(fbp + location)) = t;
+					}
+				} else {
+					return;
+				}
+			}
+		}
+	}
+}
+
 
 void bufferMem::printBackground(color C) {
 	long int location;

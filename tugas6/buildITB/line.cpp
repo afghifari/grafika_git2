@@ -1,5 +1,5 @@
 #include "line.h"
-
+#include <stdio.h>
 
 void line::swap (int *a, int *b) {
 	int temp;
@@ -166,6 +166,29 @@ void line::drawPolyline (int n, Point *P, color C, int W) {
 }
 
 void line::drawPolygon (int n, Point *P, color C, int W) {
+	drawBresenhamLine(P[n-1], P[0], C, W);
+	drawPolyline(n, P, C, W);
+	// fill unknown generated gap
+	drawBresenhamLine(P[n-1], P[0], C, W);
+}
+
+void line::drawPolygonZoom (int n, Point *P, color C, int W, double multiplier) {
+	Point* P2;
+	Point Pcentroid(0,0);
+	for(int i=0; i<n; i++) {
+		Pcentroid.AddToMe(P[i]);
+	}
+	Pcentroid.SetAbsis(Pcentroid.GetAbsis()/n);
+	Pcentroid.SetOrdinat(Pcentroid.GetOrdinat()/n);
+	int deltaX, deltaY;
+	for(int i=0; i<n; i++) {
+		deltaX = Pcentroid.GetAbsis() - P[i].GetAbsis();
+		deltaY = Pcentroid.GetOrdinat() - P[i].GetOrdinat();
+		P[i].SetAbsis(P[i].GetAbsis() - multiplier*deltaX);
+		P[i].SetOrdinat(P[i].GetOrdinat() - multiplier*deltaY);
+	}
+	
+
 	drawBresenhamLine(P[n-1], P[0], C, W);
 	drawPolyline(n, P, C, W);
 	// fill unknown generated gap

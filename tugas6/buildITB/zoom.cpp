@@ -18,6 +18,7 @@ zoom::zoom() {
 	
 	buf.printBackground(blackColor);
 	buf.printSquare(62, 199, 99, whiteColor);
+	buf.printSquareZoom(62, 199, 99, yellowColor, 2);
 	buf.printSquare (20, 200, 100, yellowColor);
 	buf.printSquare (20, 220, 100, blueColor);
 	buf.printSquare (20, 240, 100, greenColor);

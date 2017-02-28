@@ -1,5 +1,5 @@
 #include "Point.h"
-
+#include <math.h>
 //Constructor
 // Set titik mula - mula ke (0, 0)
 Point::Point (){
@@ -112,6 +112,8 @@ Point Point::MirrorOfMe(){
 	return P;
 }
 
-
-
-
+Point& Point::operator= (const Point &p) {
+	x = p.x;
+	y = p.y;
+	return *this;	
+}

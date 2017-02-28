@@ -51,6 +51,9 @@ class Point {
 
         // Menghasilkan sebuah titik yang merupakan hasil mirror dengan garis
         Point MirrorOfMe();
+        
+        Point& operator= (const Point&);
+        
     private:
         int x; //absis
         int y; //ordinat

@@ -25,7 +25,7 @@ class bufferMem {
 		void printBackground(color C);
 		color get_pixel(int loc_x, int loc_y);
 		void put_pixel (int loc_x, int loc_y, color C);
-		
+		void printSquareZoom(int edge, int loc_x, int loc_y, color C, double multiplier);
 	private :
 		static int fbfd;
 		static struct fb_var_screeninfo vinfo;

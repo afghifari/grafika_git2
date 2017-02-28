@@ -14,7 +14,7 @@ class line {
 		void drawBresenhamLine (Point P1, Point P2, color C, int W);
 		void drawPolyline (int n, Point *P, color C, int W);
 		void drawPolygon (int n, Point *P, color C, int W);
-
+		void drawPolygonZoom (int n, Point *P, color C, int W, double multiplier);
 		/*
 		initialPoint : explosion location in the screen
 		scaleFactor : size of the explosion
