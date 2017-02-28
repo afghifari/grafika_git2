@@ -5,6 +5,7 @@ class Point {
       	//Constructor
       	// Set titik mula - mula ke (0, 0)
         Point();
+        Point(int x, int y);
         
         //Getter
         int GetAbsis();
