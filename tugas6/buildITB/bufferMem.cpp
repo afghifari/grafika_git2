@@ -109,3 +109,25 @@ void bufferMem::printBackground(color C) {
         }
     }
 }
+
+
+color bufferMem::get_pixel (int loc_x, int loc_y) {
+	color initial;
+
+    long int location;
+    int i,j;
+    if (((loc_x)>=0) && ((loc_x + 1)<vinfo.xres) && ((loc_y)>=0) && ((loc_y + 1)<vinfo.yres)) {
+		for (i = loc_x; i < (loc_x + 1); i++) {
+			for (j = loc_y; j < (loc_y + 1); j++) {
+				location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
+
+				if (fbp + location) {  	//check for segmentation fault
+					initial.setColor((*(fbp + location + 2)), (*(fbp + location + 1)), (*(fbp + location)));
+				} else {
+					initial.setColor(0, 0, 0);
+				}
+			}
+		}
+	}
+	return initial;
+}
