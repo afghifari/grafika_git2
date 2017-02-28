@@ -6,6 +6,9 @@ using namespace std;
 int main() {
 	color c;
 	color cc(1,2,3);
+
+	
+
 	cout << "get r : " << c.getR() << endl;
 	cout << "get g : " << c.getG() << endl;
 	cout << "get b : " << c.getB() << endl;

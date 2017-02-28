@@ -7,9 +7,14 @@ long int bufferMem::screensize = 0;
 char* bufferMem::fbp = NULL;
 
 bufferMem::bufferMem() {
-	fbfd = 0;
-	screensize = 0;
-	*fbp = 0;
+	
+}
+
+bufferMem::~bufferMem() {
+
+}
+
+void bufferMem::startBuffer() {
 	fbfd = open("/dev/fb0", O_RDWR);
 	if (fbfd == -1) {
 	 perror("Error: cannot open framebuffer device");
@@ -43,8 +48,9 @@ bufferMem::bufferMem() {
 	displayHeight = vinfo.yres;
 }
 
-bufferMem::~bufferMem() {
-
+void bufferMem::closeBuffer() {
+	munmap(fbp, screensize);
+	close(fbfd);
 }
 
 void bufferMem::printSquare (int edge, int loc_x, int loc_y, color C) {
@@ -83,11 +89,6 @@ void bufferMem::printBackground(color C) {
     int width = displayWidth - 6;
     int height = displayHeight - 6;
     int i,j;
-
-
-    printf("red : %d\n", C.getR());
-    printf("Green : %d\n", C.getG());
-    printf("Blue : %d\n", C.getB());
 
     for (i = 0; i < width; i++) {
         for (j = 0; j < height; j++) {
