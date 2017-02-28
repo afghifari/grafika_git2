@@ -13,7 +13,7 @@ class color {
 
 		color getColor();
 
-		void setColor(int r, int g, int b);		
+		void setColor(int r, int g, int b);
 
 		int getR();
 		int getG();

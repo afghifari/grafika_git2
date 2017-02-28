@@ -39,8 +39,8 @@ bufferMem::bufferMem() {
         exit(4);
     }
 
-	// displayWidth = vinfo.xres;
-	// displayHeight = vinfo.yres;
+	displayWidth = vinfo.xres;
+	displayHeight = vinfo.yres;
 }
 
 bufferMem::~bufferMem() {
@@ -83,6 +83,11 @@ void bufferMem::printBackground(color C) {
     int width = displayWidth - 6;
     int height = displayHeight - 6;
     int i,j;
+
+
+    printf("red : %d\n", C.getR());
+    printf("Green : %d\n", C.getG());
+    printf("Blue : %d\n", C.getB());
 
     for (i = 0; i < width; i++) {
         for (j = 0; j < height; j++) {

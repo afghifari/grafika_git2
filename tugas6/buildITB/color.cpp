@@ -37,7 +37,7 @@ void color::setColor(int r, int g, int b) {
 }
 
 color color::getColor() {
-	color c;
+	color c(R,G,B);
 	return c;
 }
 
