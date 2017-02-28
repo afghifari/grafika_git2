@@ -199,17 +199,6 @@ void line::drawExplosion (Point initialPoint) {
 	}
 }
 
-void line::plot8pixel (Point P, int p, int q, int W, color C) {
-    buf.printSquare(W, P.GetAbsis()+p, P.GetOrdinat()+q, C);
-    buf.printSquare(W, P.GetAbsis()-p, P.GetOrdinat()+q, C);
-    buf.printSquare(W, P.GetAbsis()+p, P.GetOrdinat()-q, C);
-    buf.printSquare(W, P.GetAbsis()-p, P.GetOrdinat()-q, C);
-
-    buf.printSquare(W, P.GetAbsis()+q, P.GetOrdinat()+p, C);
-    buf.printSquare(W, P.GetAbsis()-q, P.GetOrdinat()+p, C);
-    buf.printSquare(W, P.GetAbsis()+q, P.GetOrdinat()-p, C);
-    buf.printSquare(W, P.GetAbsis()-q, P.GetOrdinat()-p, C);
-}
 
 void line::plot4pixel (Point P, int p, int q, int W, color C) {
     buf.printSquare(W, P.GetAbsis()+p, P.GetOrdinat()-q, C);
@@ -218,32 +207,7 @@ void line::plot4pixel (Point P, int p, int q, int W, color C) {
     buf.printSquare(W, P.GetAbsis()-q, P.GetOrdinat()-p, C);
 }
 
-/*
-radius	: jari-jari lingkaran
-P	: titik asal lingkaran
-*/
-void line::drawCircle (int radius, Point P, int W, color C) {
-    int d, p, q;
 
-    p = 0;
-    q = radius;
-    d = 3 - 2*radius;
-
-    plot8pixel(P, p, q, W, C);
-
-    while (p < q) {
-        p++;
-        if (d<0) {
-            d = d + 4*p + 6;
-        }
-        else {
-            q--;
-            d = d + 4*(p-q) + 10;
-        }
-
-        plot8pixel(P, p, q, W, C);
-    }
-}
 
 
 /*

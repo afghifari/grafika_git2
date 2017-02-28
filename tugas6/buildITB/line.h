@@ -21,14 +21,8 @@ class line {
 		*P isi dengan array explosionPoint
 		*/
 		void drawExplosion (Point initialPoint);
-		void plot8pixel (Point P, int p, int q, int W, color C);
 		void plot4pixel (Point P, int p, int q, int W, color C);
 
-		/*
-		radius	: jari-jari lingkaran
-		P	: titik asal lingkaran
-		*/
-		void drawCircle (int radius, Point P, int W, color C);
 
 		/*
 		radius	: jari-jari lingkaran
