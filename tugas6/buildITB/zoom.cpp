@@ -5,7 +5,9 @@
 
 bufferMem buf;
 zoom::~zoom() {}
-zoom::zoom() {
+zoom::zoom() {}
+
+void zoom::tesZoom() {
 	buf.startBuffer();
 
 	color yellowColor(255,255,10);
@@ -17,6 +19,7 @@ zoom::zoom() {
 	color whiteColor(255,255,255);
 	
 	buf.printBackground(blackColor);
+	printf("oke\n");
 	buf.printSquare(62, 199, 99, whiteColor);
 	buf.printSquareZoom(62, 199, 99, yellowColor, 2);
 	buf.printSquare (20, 200, 100, yellowColor);
@@ -28,7 +31,6 @@ zoom::zoom() {
 	get = buf.get_pixel(220,120);
 	usleep(2000000);
 	zoomInOut(199,99, 60, 60, 0.5);
-	usleep(10000000);
 	buf.closeBuffer();
 }
 
