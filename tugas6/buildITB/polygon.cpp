@@ -18,8 +18,8 @@ void Polygon::clip() {
 					arrPoint[i+1].x, arrPoint[i+1].y);
 	}
 }
-void Polygon::zoom() {
-
+void Polygon::zoom(double multiplier) {
+	drawPolygonZoom(N, arrPoint, C, W, multiplier);
 }
 
 int Polygon::findRegion(int x, int y)
