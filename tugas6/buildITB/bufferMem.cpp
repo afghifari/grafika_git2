@@ -87,10 +87,6 @@ void bufferMem::printBackground(color C) {
     int i,j;
 
 
-    printf("red : %d\n", C.getR());
-    printf("Green : %d\n", C.getG());
-    printf("Blue : %d\n", C.getB());
-
     for (i = 0; i < width; i++) {
         for (j = 0; j < height; j++) {
             location = (i+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (j+vinfo.yoffset) * finfo.line_length;
