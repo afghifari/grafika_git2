@@ -17,6 +17,7 @@ class bufferMem {
 		bufferMem();
 		~bufferMem();
 
+		void startBuffer();
 		void closeBuffer();
 
 
