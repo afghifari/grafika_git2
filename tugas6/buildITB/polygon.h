@@ -1,17 +1,20 @@
 #include "Point.h"
 #include "line.h"
+#include "color.h"
 
 class Polygon : public Drawable
 {
 public:	
-	Polygon(Point*);
+	Polygon(Point* p, color c, int w);
 	~Polygon();
 
 	void draw();
 	void clip();
-	void scale();
+	void zoom();
 
 	/* data */
 private:
 	Point* arrPoint;
+	color C;
+	int W;
 };

@@ -1,15 +1,17 @@
-Polygon::Polygon(int x=0, int y=0, int n) {
-	
+Polygon::Polygon(Point* p, color c, int w) {
+	arrPoint = p;
+	C = c;
+	W = w;
 }
 Polygon::~Polygon() {
-	
+	free(arrPoint);
 }
 void Polygon::draw() {
 	
 }
 void Polygon::clip() {
-	
+
 }
-void Polygon::scale() {
-	
+void Polygon::zoom() {
+
 }
