@@ -9,7 +9,7 @@ class color {
 		~color();
 		color(color&);
 
-		color& operator= (color&);
+		color& operator= (const color&);
 
 		color getColor();
 

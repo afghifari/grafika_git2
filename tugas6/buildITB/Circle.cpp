@@ -1,6 +1,7 @@
 #include "Circle.h"
 
 Circle::Circle(const Point& coor, int radius, int borderSize, color c) : coordinate(coor){
+	this->coordinate = coor;
   this->radius = radius;
   this->borderSize = borderSize;
   myColor = c;
@@ -46,5 +47,8 @@ void Circle::plot8pixel (bufferMem& buf, Point P, int p, int q, int W, color C){
   buf.printSquare(W, P.GetAbsis()-q, P.GetOrdinat()-p, C);
 }
 
- 
+ void Circle::zoom(bufferMem& buf, double multiplier) {
+	 radius = radius*2;
+	 draw(buf);
+ }
  

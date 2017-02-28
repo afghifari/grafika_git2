@@ -131,3 +131,21 @@ color bufferMem::get_pixel (int loc_x, int loc_y) {
 	}
 	return initial;
 }
+
+void bufferMem::put_pixel (int loc_x, int loc_y, color C) {
+	long int location;
+	location = (loc_x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (loc_y+vinfo.yoffset) * finfo.line_length;
+	if (vinfo.bits_per_pixel == 32) {
+		*(fbp + location) = C.getB();         //Blue
+		*(fbp + location + 1) = C.getG();     //Green
+		*(fbp + location + 2) = C.getR();     //Red
+		*(fbp + location + 3) = 0;       //No transparency
+	} else  { //assume 16bpp
+		int r = C.getR();     //Red
+		int g = C.getG();     //Green
+		int b = C.getB();     //Blue
+
+		unsigned short int t = r<<11 | g << 5 | b;
+		*((unsigned short int*)(fbp + location)) = t;
+	}
+}

@@ -22,7 +22,7 @@ color::color(color &c) {
 	B = c.B;
 }
 
-color& color::operator= (color &c) {
+color& color::operator= (const color &c) {
 	R = c.R;
 	G = c.G;
 	B = c.B;

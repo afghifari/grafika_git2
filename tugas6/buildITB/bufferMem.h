@@ -24,6 +24,7 @@ class bufferMem {
 		void printSquare (int edge, int loc_x, int loc_y, color C);
 		void printBackground(color C);
 		color get_pixel(int loc_x, int loc_y);
+		void put_pixel (int loc_x, int loc_y, color C);
 		
 	private :
 		static int fbfd;

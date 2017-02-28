@@ -14,6 +14,7 @@ public:
   Circle(const Point& coor, int radius, int borderSize, color c);
   void setCoordinate(const Point& coor);
   void draw(bufferMem& buf);
+  void zoom(bufferMem& buf, double multiplier);
   
 private:
   void plot8pixel(bufferMem& buf, Point P, int p, int q, int W, color C);

@@ -184,7 +184,7 @@ void line::drawExplosion (Point initialPoint) {
 
 	int i;
 	for(i=0;i<200;i+=3){
-		drawCircle (i, initialPoint, 5, C);
+		//drawCircle (i, initialPoint, 5, C);
 		initialPoint.SetAbsis(initialPoint.GetAbsis() - 3);
 		usleep(4000);
 	}
@@ -193,7 +193,7 @@ void line::drawExplosion (Point initialPoint) {
 	initialPoint.SetOrdinat(initialPoint.GetOrdinat() + 50);
 
 	for(i=0;i<140;i+=3){
-		drawCircle (i, initialPoint, 5, C);
+	//drawCircle (i, initialPoint, 5, C);
 		initialPoint.SetAbsis(initialPoint.GetAbsis() + 1);
 		usleep(4000);
 	}
