@@ -8,8 +8,41 @@
 #include "Point.h"
 #include "Circle.h"
 #include <math.h>
+#include <termios.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <stdio.h>
+
+#define KEY_UP 65
+#define KEY_DOWN 66
+#define KEY_RIGHT 67
+#define KEY_LEFT 68
+#define KEY_ENTER 10
+
+#define KEY_W 119
+#define KEY_S 115
+#define KEY_A 97
+#define KEY_D 100
+
 using namespace std;
 	bufferMem buf;
+	ifstream fs3("data/dataTree");
+	ifstream fs1("data/dataBuilding");
+	ifstream fs2("data/dataRoad");
+		double multiplier = 1;
+		
+		//read keypress
+int getch(void) {
+	struct termios oldattr, newattr;
+	int ch;
+	tcgetattr( STDIN_FILENO, &oldattr );
+	newattr = oldattr;
+	newattr.c_lflag &= ~( ICANON | ECHO );
+	tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
+	ch = getchar();
+	tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
+	return ch;
+}
 void loadPolygonFile( ifstream& fs, double multiplier ){
 	 Point P[100];
 //	 for(int i =0; i<100; i++) {
@@ -22,7 +55,7 @@ void loadPolygonFile( ifstream& fs, double multiplier ){
     getline( fs, str );
 	color blueColor(0,30,255);
 
-    // new polygon
+    // new polygon+
     istringstream ss( str );
     while( true ){
       int x;
@@ -37,7 +70,7 @@ void loadPolygonFile( ifstream& fs, double multiplier ){
       	
     }
     line LineFactory;
-     LineFactory.drawPolygonZoom(N, P, blueColor, 3, (sqrt(multiplier))/32);
+     LineFactory.drawPolygonZoom(N, P, blueColor, 3, (sqrt(multiplier))/64);
     N= 0;
     if( fs.eof() ) break;
     
@@ -93,39 +126,73 @@ void loadRoadFile( ifstream& fs, double multiplier ){
   }
 }
 
-vector<Point> loadPointFile( ifstream& fs, double multiplier ){
-  vector<Point> points;
+void loadPointFile( ifstream& fs, double multiplier ){
   int x, y;
   color greenColor(30,255,30);
   while( true ){
     fs >> x >> y;
     if( fs.eof() ) break;
     // push new tree here
-    points.push_back( Point(x*multiplier,y*multiplier) );
+    //points.push_back( Point(x*multiplier,y*multiplier) );
     Circle circleFactory(Point(x*multiplier,y*multiplier), 2*multiplier, 1*multiplier, greenColor);
     circleFactory.zoom(buf, sqrt(multiplier));
   }
-  
-  return points;
 }
+
+void *inc_x(void *x_void_ptr) {
+	pthread_t thread1;
+
+	while(true){
+		char c;
+		c = getch();
+		if (c == KEY_DOWN){
+			multiplier = multiplier-0.3;
+		}
+        else if (c == KEY_UP) {
+        	multiplier = multiplier+0.3;
+        }else {
+
+        }
+		
+	}
+
+
+	return NULL;
+}
+
 
 int main(){
 
 	buf.startBuffer();
-	
+	int x=0;
+	int sign = 0;
 	color blackColor(0,0,0);
 	
-	//PRINT LAYAR
-	double multiplier = 2;
-	buf.printBackground(blackColor);
-	ifstream fs3("data/dataTree");
-	vector<Point> ps = loadPointFile(fs3, multiplier);
-	ifstream fs1("data/dataBuilding");
-	loadPolygonFile( fs1, multiplier);
-	ifstream fs2("data/dataRoad");
-	loadRoadFile( fs2, multiplier );
-  
-  
+	pthread_t inc_x_thread, thread33;
+
+	//  //create a thread which executes inc_x(&x)
+	if(pthread_create(&inc_x_thread, NULL, inc_x, &x)) {
+		fprintf(stderr, "Error creating thread 1\n");
+		return 1;
+	}
+	
+	while (sign==0) {
+
+		buf.printBackground(blackColor);
+		
+		loadPointFile(fs3, multiplier);
+		
+		loadPolygonFile( fs1, multiplier);
+		
+		loadRoadFile( fs2, multiplier );
+		usleep(100000);
+		fs1.close();
+		fs2.close();
+		fs3.close();
+		fs3.open("data/dataTree");
+		fs1.open("data/dataBuilding");
+		fs2.open("data/dataRoad");
+	}
 
 
     fs1.close();

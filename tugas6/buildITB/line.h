@@ -23,6 +23,9 @@ class line {
 		void drawExplosion (Point initialPoint);
 		void plot4pixel (Point P, int p, int q, int W, color C);
 
+		int findRegion(int x, int y);
+		bool clipLine(int x1, int y1, int x2, int y2, int & x3, int & y3, int & x4, int & y4);
+
 
 		/*
 		radius	: jari-jari lingkaran
