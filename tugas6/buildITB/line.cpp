@@ -150,7 +150,23 @@ void line::drawBresenhamLine (Point P1, Point P2, color C, int W) {
 		P1.SetOrdinat(y1);
 		P2.SetAbsis(x2);
 		P2.SetOrdinat(y2);
+		if (P1.GetAbsis() > P2.GetAbsis()) {
+			swapPoint(&P1,&P2);
+		}
+
+		if ((P2.GetAbsis() >= P1.GetAbsis() && P1.GetOrdinat() > P2.GetOrdinat())) {
+			plotSlopNegativeLine(P1,P2,C,W);
+		}
+		else if (P1.GetAbsis() == P2.GetAbsis()) {
+			plotVerticalLine(P1,P2,C,W);
+		}
+		else {
+			plotSlopPositiveLine(P1,P2,C,W);
+		}
 	}
+}
+
+void line::drawBresenhamLine2 (Point P1, Point P2, color C, int W) {
 	if (P1.GetAbsis() > P2.GetAbsis()) {
 		swapPoint(&P1,&P2);
 	}
@@ -180,11 +196,26 @@ void line::drawPolyline (int n, Point *P, color C, int W) {
 	}
 }
 
+void line::drawPolyline2 (int n, Point *P, color C, int W) {
+	int i;
+	int x1, y1, x2, y2;
+	for (i = 0;i < n-1;i++) {
+		drawBresenhamLine2(P[i], P[i+1], C, W);
+	}
+}
+
 void line::drawPolygon (int n, Point *P, color C, int W) {
 	drawBresenhamLine(P[n-1], P[0], C, W);
 	drawPolyline(n, P, C, W);
 	// fill unknown generated gap
 	drawBresenhamLine(P[n-1], P[0], C, W);
+}
+
+void line::drawPolygon2 (int n, Point *P, color C, int W) {
+	drawBresenhamLine2(P[n-1], P[0], C, W);
+	drawPolyline2(n, P, C, W);
+	// fill unknown generated gap
+	drawBresenhamLine2(P[n-1], P[0], C, W);
 }
 
 void line::drawPolygonZoom (int n, Point *P, color C, int W, double multiplier) {
@@ -208,6 +239,29 @@ void line::drawPolygonZoom (int n, Point *P, color C, int W, double multiplier) 
 	drawPolyline(n, P, C, W);
 	// fill unknown generated gap
 	drawBresenhamLine(P[n-1], P[0], C, W);
+}
+
+void line::drawPolygonZoom2 (int n, Point *P, color C, int W, double multiplier) {
+	Point* P2;
+	Point Pcentroid(0,0);
+	for(int i=0; i<n; i++) {
+		Pcentroid.AddToMe(P[i]);
+	}
+	Pcentroid.SetAbsis(Pcentroid.GetAbsis()/n);
+	Pcentroid.SetOrdinat(Pcentroid.GetOrdinat()/n);
+	int deltaX, deltaY;
+	for(int i=0; i<n; i++) {
+		deltaX = Pcentroid.GetAbsis() - P[i].GetAbsis();
+		deltaY = Pcentroid.GetOrdinat() - P[i].GetOrdinat();
+		P[i].SetAbsis(P[i].GetAbsis() - multiplier*deltaX);
+		P[i].SetOrdinat(P[i].GetOrdinat() - multiplier*deltaY);
+	}
+	
+
+	drawBresenhamLine2(P[n-1], P[0], C, W);
+	drawPolyline2(n, P, C, W);
+	// fill unknown generated gap
+	drawBresenhamLine2(P[n-1], P[0], C, W);
 }
 
 /*
@@ -277,8 +331,8 @@ void line::drawCircleHalf (int radius, Point P, int W, color C) {
 
 int line::findRegion(int x, int y)
 {
-	int h = 50;
-	int w = 50;
+	int h = 400;
+	int w = 400;
   int code=0;
   if(y >= h)
   code |= 1; //top
@@ -295,8 +349,8 @@ int line::findRegion(int x, int y)
 bool line::clipLine(int x1, int y1, int x2, int y2, int & x3, int & y3, int & x4, int & y4)
 {
   int code1, code2, codeout;
-  int w = 50;
-  int h = 50;
+  int w = 400;
+  int h = 400;
   bool accept = 0, done=0;
   code1 = findRegion(x1, y1); //the region outcodes for the endpoints
   code2 = findRegion(x2, y2);

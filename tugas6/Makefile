@@ -7,7 +7,7 @@ mybufferMem :
 	g++ -o mybufferMem buildITB/color.cpp buildITB/bufferMem.cpp buildITB/mBufferMem.cpp buildITB/Point.cpp buildITB/Circle.cpp buildITB/line.cpp -std=c++11
 	
 myLoadData :
-	g++ -o myLoadData buildITB/color.cpp buildITB/bufferMem.cpp buildITB/mLoadData.cpp buildITB/Point.cpp buildITB/Circle.cpp buildITB/line.cpp -std=c++11
+	g++ -o myLoadData buildITB/color.cpp buildITB/bufferMem.cpp buildITB/mLoadData.cpp buildITB/Point.cpp buildITB/Circle.cpp buildITB/line.cpp -std=c++11 -lpthread
 
 myLine:
 	g++ -o myLine buildITB/mLine.cpp buildITB/line.cpp buildITB/color.cpp buildITB/bufferMem.cpp buildITB/Point.cpp -std=c++11

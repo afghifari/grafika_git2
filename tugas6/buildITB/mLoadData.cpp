@@ -23,14 +23,25 @@
 #define KEY_S 115
 #define KEY_A 97
 #define KEY_D 100
+#define KEY_T 116
+#define KEY_B 98
+#define KEY_R 114
+
 
 using namespace std;
 	bufferMem buf;
 	ifstream fs3("data/dataTree");
 	ifstream fs1("data/dataBuilding");
-	ifstream fs2("data/dataRoad");
+	ifstream fs2("data/dataRoad");	
+	ifstream fs6("data/dataTree");
+	ifstream fs4("data/dataBuilding");
+	ifstream fs5("data/dataRoad");
 		double multiplier = 1;
-		
+	Point camera = Point(200, 200);
+	bool treeView = true;
+	bool roadView = true;
+	bool buildingView = true;
+
 		//read keypress
 int getch(void) {
 	struct termios oldattr, newattr;
@@ -50,7 +61,7 @@ void loadPolygonFile( ifstream& fs, double multiplier ){
 //	 }
   while( true ){
 	 
-	  int N =0;
+	int N =0;
     string str;
     getline( fs, str );
 	color blueColor(0,30,255);
@@ -62,7 +73,7 @@ void loadPolygonFile( ifstream& fs, double multiplier ){
       int y;
       ss >> x;
       ss >> y;
-      P[N] = Point(x*multiplier,y*multiplier);
+      P[N] = Point((camera.GetAbsis() + x)*multiplier,(camera.GetOrdinat() + y)*multiplier);
       N++;
       if( ss.eof() ) break;
       //cout << N << " ";
@@ -97,7 +108,7 @@ void loadRoadFile( ifstream& fs, double multiplier ){
       int y;
       ss >> x;
       ss >> y;
-      P[N] = Point(x*multiplier,y*multiplier);
+      P[N] = Point((camera.GetAbsis() + x)*multiplier,(camera.GetOrdinat() + y)*multiplier);
       N++;
       if( ss.eof() ) break;
       //cout << N << " ";
@@ -112,7 +123,7 @@ void loadRoadFile( ifstream& fs, double multiplier ){
       int y;
       ss >> x;
       ss >> y;
-      P[N] = Point(x*multiplier,y*multiplier);
+      P[N] = Point((camera.GetAbsis() + x)*multiplier,(camera.GetOrdinat() + y)*multiplier);
       N++;
       if( ss.eof() ) break;
       //cout << N << " ";
@@ -134,9 +145,148 @@ void loadPointFile( ifstream& fs, double multiplier ){
     if( fs.eof() ) break;
     // push new tree here
     //points.push_back( Point(x*multiplier,y*multiplier) );
-    Circle circleFactory(Point(x*multiplier,y*multiplier), 2*multiplier, 1*multiplier, greenColor);
-    circleFactory.zoom(buf, sqrt(multiplier));
+    line Linefactory;
+    Point points[3];
+    points[0] = Point(x+4, y+4);
+    points[1] = Point(x-4, y+4);
+    points[2] = Point(x, y-4);
+    for( int i = 0; i < 3; ++ i ){
+    	points[i].SetAbsis( (camera.GetAbsis() + points[i].GetAbsis()) * multiplier );
+    	points[i].SetOrdinat( (camera.GetOrdinat() + points[i].GetOrdinat()) * multiplier );
+    }
+
+    Linefactory.drawPolygonZoom(3,points,greenColor, 1, sqrt(multiplier)/32);
+    // Circle circleFactory(Point(x*multiplier,y*multiplier), 2*multiplier, 1*multiplier, greenColor);
+//    circleFactory.zoom(buf, sqrt(multiplier));
   }
+}
+
+void loadPolygonFile2( ifstream& fs, double multiplier ){
+	 Point P[100];
+//	 for(int i =0; i<100; i++) {
+//		 P[i] = Point(0,0);
+//	 }
+  while( true ){
+	 
+	int N =0;
+    string str;
+    getline( fs, str );
+	color blueColor(0,30,255);
+
+    // new polygon+
+    istringstream ss( str );
+    while( true ){
+      int x;
+      int y;
+      ss >> x;
+      ss >> y;
+      P[N] = Point(600+( x)*multiplier,( y)*multiplier);
+      N++;
+      if( ss.eof() ) break;
+      //cout << N << " ";
+      // add to polygon Point x and y
+      	
+    }
+    line LineFactory;
+     LineFactory.drawPolygonZoom2(N, P, blueColor, 3, (sqrt(multiplier))/64);
+    N= 0;
+    if( fs.eof() ) break;
+    
+    // push to array polygons
+  }
+}
+
+void loadRoadFile2( ifstream& fs, double multiplier ){
+	 Point P[100];
+//	 for(int i =0; i<100; i++) {
+//		 P[i] = Point(0,0);
+//	 }
+  while( true ){
+	 
+	  int N =0;
+    string str;
+    getline( fs, str );
+	color yellowColor(255,255,10);
+	
+    // new polygon
+    istringstream ss( str );
+    while( N <2){
+      int x;
+      int y;
+      ss >> x;
+      ss >> y;
+      P[N] = Point(600+( x)*multiplier,( y)*multiplier);
+      N++;
+      if( ss.eof() ) break;
+      //cout << N << " ";
+      // add to polygon Point x and y
+      	
+    }
+    line LineFactory;
+     LineFactory.drawPolygonZoom2(N, P, yellowColor, 1, sqrt(multiplier)/32);
+    N= 0;
+    while( N <2){
+      int x;
+      int y;
+      ss >> x;
+      ss >> y;
+      P[N] = Point(600 + ( x)*multiplier,( y)*multiplier);
+      N++;
+      if( ss.eof() ) break;
+      //cout << N << " ";
+      // add to polygon Point x and y
+      	
+    }
+     LineFactory.drawPolygonZoom2(N, P, yellowColor, 1, sqrt(multiplier)/32);
+    if( fs.eof() ) break;
+    
+    // push to array polygons
+  }
+}
+
+void loadPointFile2( ifstream& fs, double multiplier ){
+  int x, y;
+  color greenColor(30,255,30);
+  while( true ){
+    fs >> x >> y;
+    if( fs.eof() ) break;
+    // push new tree here
+    //points.push_back( Point(x*multiplier,y*multiplier) );
+    line Linefactory;
+    Point points[3];
+    points[0] = Point(x+4, y+4);
+    points[1] = Point(x-4, y+4);
+    points[2] = Point(x, y-4);
+    for( int i = 0; i < 3; ++ i ){
+    	points[i].SetAbsis( 600+ ( points[i].GetAbsis()) * multiplier );
+    	points[i].SetOrdinat( ( points[i].GetOrdinat()) * multiplier );
+    }
+
+    Linefactory.drawPolygonZoom2(3,points,greenColor, 1, sqrt(multiplier)/32);
+    // Circle circleFactory(Point(x*multiplier,y*multiplier), 2*multiplier, 1*multiplier, greenColor);
+//    circleFactory.zoom(buf, sqrt(multiplier));
+  }
+}
+
+
+
+void *petaBesar(void* args) {	
+	while (true) {
+		if (treeView)
+			loadPointFile(fs6, 1);
+		if (buildingView)
+			loadPolygonFile( fs4, 1);
+		if (roadView)
+			loadRoadFile( fs5, 1 );
+		usleep(100000);
+		fs4.close();
+		fs5.close();
+		fs6.close();
+		fs6.open("data/dataTree");
+		fs4.open("data/dataBuilding");
+		fs5.open("data/dataRoad");
+	}
+	return NULL;
 }
 
 void *inc_x(void *x_void_ptr) {
@@ -146,13 +296,25 @@ void *inc_x(void *x_void_ptr) {
 		char c;
 		c = getch();
 		if (c == KEY_DOWN){
-			multiplier = multiplier-0.3;
+			multiplier = multiplier-0.1;
 		}
         else if (c == KEY_UP) {
-        	multiplier = multiplier+0.3;
-        }else {
-
-        }
+        	multiplier = multiplier+0.1;
+        }else if (c == KEY_A) {
+    		camera.SetAbsis(camera.GetAbsis() + 10);
+    	} else if (c == KEY_D) {
+    		camera.SetAbsis(camera.GetAbsis() - 10);
+    	} else if (c == KEY_S) {
+    		camera.SetOrdinat(camera.GetOrdinat() - 10);
+    	} else if (c == KEY_W) {
+    		camera.SetOrdinat(camera.GetOrdinat() + 10);
+    	} else if (c == KEY_T) {
+    		treeView = !treeView;
+    	} else if (c == KEY_B) {
+    		buildingView = !buildingView;
+    	} else if (c == KEY_R) {
+    		roadView = !roadView;
+    	}
 		
 	}
 
@@ -167,6 +329,13 @@ int main(){
 	int x=0;
 	int sign = 0;
 	color blackColor(0,0,0);
+	color whiteColor(255,255,255);
+	line Liner;
+	Point po[4];
+	po[0] = Point(0,0);
+	po[1] = Point(0,400);
+	po[2] = Point(400,400);
+	po[3] = Point(400,0);
 	
 	pthread_t inc_x_thread, thread33;
 
@@ -176,15 +345,21 @@ int main(){
 		return 1;
 	}
 	
+	if(pthread_create(&thread33, NULL, petaBesar, (void*)0)) {
+		fprintf(stderr, "Error creating thread 1\n");
+		return 1;
+	}
 	while (sign==0) {
 
+
 		buf.printBackground(blackColor);
-		
-		loadPointFile(fs3, multiplier);
-		
-		loadPolygonFile( fs1, multiplier);
-		
-		loadRoadFile( fs2, multiplier );
+		if (treeView)
+			loadPointFile(fs3, multiplier);
+		if (buildingView)
+			loadPolygonFile( fs1, multiplier);
+		if (roadView)
+			loadRoadFile( fs2, multiplier );
+		Liner.drawPolyline(4,po,whiteColor,2);
 		usleep(100000);
 		fs1.close();
 		fs2.close();
