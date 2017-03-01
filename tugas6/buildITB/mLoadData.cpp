@@ -7,6 +7,7 @@
 #include "color.h"
 #include "Point.h"
 #include "Circle.h"
+#include "zoom.h"
 #include <math.h>
 #include <termios.h>
 #include <unistd.h>
@@ -37,7 +38,7 @@ using namespace std;
 	ifstream fs4("data/dataBuilding");
 	ifstream fs5("data/dataRoad");
 		double multiplier = 1;
-	Point camera = Point(200, 200);
+	Point camera = Point(0, 0);
 	bool treeView = true;
 	bool roadView = true;
 	bool buildingView = true;
@@ -272,6 +273,7 @@ void loadPointFile2( ifstream& fs, double multiplier ){
 
 void *petaBesar(void* args) {	
 	while (true) {
+		
 		if (treeView)
 			loadPointFile2(fs6, 1);
 		if (buildingView)
@@ -336,6 +338,12 @@ int main(){
 	po[1] = Point(0,400);
 	po[2] = Point(400,400);
 	po[3] = Point(400,0);
+
+	Point kotak[4];
+	kotak[0] = Point(600, 0);
+	kotak[1] = Point(600, 200);
+	kotak[2] = Point(800, 200);
+	kotak[3] = Point(800, 0);
 	
 	pthread_t inc_x_thread, thread33;
 
@@ -359,7 +367,8 @@ int main(){
 			loadPolygonFile( fs1, multiplier);
 		if (roadView)
 			loadRoadFile( fs2, multiplier );
-		Liner.drawPolyline(4,po,whiteColor,2);
+		Liner.drawPolyline2(4,po,whiteColor,2);
+		Liner.drawPolyline2(4,kotak,whiteColor,2);
 		usleep(100000);
 		fs1.close();
 		fs2.close();
