@@ -273,11 +273,11 @@ void loadPointFile2( ifstream& fs, double multiplier ){
 void *petaBesar(void* args) {	
 	while (true) {
 		if (treeView)
-			loadPointFile(fs6, 1);
+			loadPointFile2(fs6, 1);
 		if (buildingView)
-			loadPolygonFile( fs4, 1);
+			loadPolygonFile2( fs4, 1);
 		if (roadView)
-			loadRoadFile( fs5, 1 );
+			loadRoadFile2( fs5, 1 );
 		usleep(100000);
 		fs4.close();
 		fs5.close();
